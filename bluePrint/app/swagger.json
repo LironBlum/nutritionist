@@ -1,0 +1,129 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "nutritionistBluePront",
+    "description": "API for BluePrint",
+    "version": "0.0.1"
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/version": {
+      "x-swagger-router-controller": "monitor",
+      "get": {
+        "operationId": "version",
+        "description": "get the microservice`s version",
+        "responses": {
+          "200": {
+            "description": "microservice`s version",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "default": {
+            "$ref": "#/definitions/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/ping": {
+      "x-swagger-router-controller": "monitor",
+      "get": {
+        "operationId": "ping",
+        "description": "ping the the microservice",
+        "responses": {
+          "200": {
+            "description": "is microservice`s up",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "default": {
+            "$ref": "#/definitions/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/vitality": {
+      "x-swagger-router-controller": "monitor",
+      "get": {
+        "operationId": "vitality",
+        "description": "check if the microservice is up n running",
+        "responses": {
+          "200": {
+            "description": "microservice`s properties",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "$ref": "#/definitions/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/getenv": {
+      "x-swagger-router-controller": "monitor",
+      "get": {
+        "operationId": "getenv",
+        "description": "get microservice's environment variables",
+        "responses": {
+          "200": {
+            "description": "environment variables of the microservice",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "default": {
+            "$ref": "#/definitions/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/blueprintexample": {
+      "x-swagger-router-controller": "bluePrint",
+      "get": {
+         "description": "a base microservice structure and conventions",
+         "operationId": "bluePrintExample",
+         "responses": {
+            "200": {          
+              "description": "Success",
+              "schema": {
+                "type": "string"
+              }
+            },
+            "default": {
+               "description": "Error",
+               "schema": {
+                  "$ref": "#/definitions/ErrorResponse"
+               }
+            }
+         }
+      }
+   }
+
+  },
+  "definitions": {
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "format": "uri",
+          "description": "URI that identifies the problem type. example=https://zalando.github.io/problem/constraint-violation,"
+        },
+        "title": {
+          "type": "string",
+          "description": "problem summary"
+        },
+        "status": {
+          "type": "string",
+          "description": "problem description and data "
+        }
+      }
+    }
+  }
+}
+
+
+

@@ -1,0 +1,83 @@
+version: '2'
+services:
+  blueprint:
+    container_name: sf360crossproductoperations-dev-all
+    image: dev:0.0.1
+    build:
+      context: .
+      dockerfile: dockerfile.dev
+    volumes:
+      - /Volumes/linx/data/log:/data/log
+      - ./:/var/app
+    env_file: ./variables.env
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "9300:9300"
+    links:
+      - "logger"
+      - "productSpecificFulfilment"
+      - "party"
+      - "channelSpecific"
+    depends_on:
+      - "logger"
+      - "productSpecificFulfilment"
+      - "party"
+      - "channelSpecific"
+  party:
+      image: "sf360partyprodimage"
+      container_name: "360party-prodcontainer-inCrossProduct"
+      links:
+        - mongodb
+      depends_on:
+        - mongodb
+      ports:
+        - 9100:9100
+      command: node start
+      env_file:
+        - ../party/variables.env
+  productSpecificFulfilment:
+    image: "sf360productspecificfulfilmetprodimage"
+    container_name: "360productspecificfulfilmet-prodcontainer-inCrossProduct"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    ports:
+      - 9400:9400
+    command: node start
+    env_file:
+      - ../productSpecificFulfilment/variables.env
+  channelSpecific:
+    image: "sf360channelspecificprodimage"
+    container_name: "360channelspecific-prodcontainer-inParty"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    ports:
+      - 9200:9200
+    command: node start
+    env_file:
+      - ../channelSpecific/variables.env
+  logger:
+    image: "logger"
+    container_name: "logger-prodcontainer-inCrossProduct"
+    links:
+      - mongodb
+    ports:
+      - 8888:8888
+    env_file: ../logger/variables.env
+    depends_on:
+      - mongodb
+    command: node start
+  mongodb:
+    volumes:
+      - /Volumes/linx/data/db:/data/db
+    ports:
+      - 27017:27017
+    image: mongo:latest
+
+
+
+
