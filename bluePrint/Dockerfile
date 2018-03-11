@@ -18,4 +18,5 @@ RUN apk add --no-cache dumb-init
 # reduce permissions for account running app
 USER node
 ENTRYPOINT ["dumb-init"]
-CMD [ "npm", "start", "run"]
+CMD ["npm","run","watch"]
+

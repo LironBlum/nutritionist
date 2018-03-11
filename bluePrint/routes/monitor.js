@@ -7,7 +7,7 @@ function ping(req,res) {
   res.status(200).json({ ping: '✔'});
 }
 
-async function vitality(req,res) {
+function vitality(req,res) {
 	res.status(200).json({ vitality: 'vitality'});
 }
 

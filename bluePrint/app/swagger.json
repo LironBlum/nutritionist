@@ -6,7 +6,7 @@
     "version": "0.0.1"
   },
   "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "produces": ["application/json","text/html"],
   "paths": {
     "/version": {
       "x-swagger-router-controller": "monitor",
@@ -83,13 +83,13 @@
     "/blueprintexample": {
       "x-swagger-router-controller": "bluePrint",
       "get": {
+        "operationId": "bluePrintExample",
          "description": "a base microservice structure and conventions",
-         "operationId": "bluePrintExample",
          "responses": {
             "200": {          
               "description": "Success",
               "schema": {
-                "type": "string"
+                "type": "object"
               }
             },
             "default": {

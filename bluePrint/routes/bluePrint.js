@@ -1,6 +1,8 @@
-
-
-exports.blueprintexample =  (req, res) => {
-	console.log("you just executed the blueprintexample route ")
-};
-
+function bluePrintExample(req,res) {
+	res.status(200).json({ bluePrintExample: 'bluePrintExample'});
+  }
+  
+  module.exports = {
+	bluePrintExample
+  };
+  
