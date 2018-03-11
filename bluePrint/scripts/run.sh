@@ -21,11 +21,3 @@ then
 else
     usage
 fi
-
-# run.sh build prod
-# run.sh build
-# run.sh up  OR run.sh up prod
-
-#for running all services together:
-# run.sh build all
-# run.sh up all
