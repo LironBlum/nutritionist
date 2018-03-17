@@ -1,7 +1,7 @@
 version: '2'
 services:
   blueprint:
-    container_name: blue-print-cotainer
+    container_name: blue-print-container
     image: blue-print-image
     build:
       context: .

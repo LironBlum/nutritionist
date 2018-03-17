@@ -44,24 +44,6 @@
         }
       }
     },
-    "/vitality": {
-      "x-swagger-router-controller": "monitor",
-      "get": {
-        "operationId": "vitality",
-        "description": "check if the microservice is up n running",
-        "responses": {
-          "200": {
-            "description": "microservice`s properties",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "default": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    },
     "/getenv": {
       "x-swagger-router-controller": "monitor",
       "get": {
