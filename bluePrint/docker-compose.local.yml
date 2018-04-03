@@ -6,14 +6,14 @@ services:
     build:
       context: .
     volumes:
-      - /Volumes/linx/data:/data
+      - /Volumes/linx/healthProject/log:/log
       - ./:/var/app
     env_file: ./variables.env
     environment:
       - NODE_ENV=development
     ports:
       - "9000:9000"
-   
+
 
 
 
