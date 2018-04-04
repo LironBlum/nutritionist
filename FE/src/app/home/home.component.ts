@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations'
+import { Router } from '@angular/router';
+import { Route } from '@angular/router';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -11,11 +12,13 @@ export class HomeComponent implements OnInit {
 
   products = [];
 
-  constructor(private _product: ProductService) { }
+  constructor( private router: Router, private _product: ProductService) { }
 
   ngOnInit() {
-    
     this._product.product.subscribe(res => this.products = res);
+  }
 
+  goToUserInput(){
+    this.router.navigate(["userInput"]); 
   }
 }

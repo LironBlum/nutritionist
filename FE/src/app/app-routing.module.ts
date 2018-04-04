@@ -4,7 +4,9 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { FridgeComponent } from './fridge/fridge.component';
 import { MealsComponent } from './meals/meals.component';
+import { UserInputComponent } from './user-input/user-input.component';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser/src/dom/events/hammer_gestures';
+
 
 const routes: Routes = [
   {
@@ -22,6 +24,10 @@ const routes: Routes = [
   {
     path:'meals',
     component:MealsComponent
+  },
+  {
+    path:'userInput',
+    component:UserInputComponent
   }
 
 

@@ -1,0 +1,29 @@
+
+
+.welcome-info{
+    line-height: 1;
+    margin: auto;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.col{
+    display: inline-block;
+    font-size: 1.2vw;
+    color: rgb(236, 236, 241);
+    background: rgb(8, 6, 6);
+    padding: 20px;
+}
+
+.getStarted{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+    text-align: center;
+    background: rgb(76, 78, 73);
+    padding:1em 2em;
+    border-radius: 25px;
+}
