@@ -1,0 +1,36 @@
+.container {
+    display: grid;
+    grid-template-columns: 50% auto;
+}
+.col {
+    padding: .4em 1.3em;
+}
+.add-product-title {
+    background: #0a0e11;
+}
+
+.product-details {
+    border:5px solid black;
+}
+input.txt {
+    border: 0;
+    padding: 1em;
+    width: 80%;
+    margin-bottom: 2em;
+}
+input.btn {
+    border: 0;
+    display:block;
+    padding:1em 3em;
+    background: rgb(76, 78, 73);
+    color: rgb(243, 245, 247);
+    margin-bottom:1em;
+    cursor:pointer;
+}
+
+.life-container {
+    border:3px solid black;
+    padding: .5em;
+    font-weight: bold;
+    cursor: pointer;
+}

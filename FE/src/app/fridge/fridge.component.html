@@ -1,0 +1,26 @@
+<div class="container add-product-title">
+    <div class="col">
+      <p>Add product</p>
+    </div>
+    <div class="col">
+      <p>Your fridge contains ({{itemCount}}) products </p>
+    </div>
+  </div>
+  
+  
+  <div class="container product-details" [@products]="products.length">
+      <div class="col">
+        <p class="sm">Product details</p>
+  
+        <form>
+          <input type="text" class="txt" name="item" placeholder="product name" [(ngModel)]= "productText">
+          
+          <input type="submit" class="btn" [value]=" btnText" (click)="addItem()">
+        </form>
+      </div>
+      <div class="col">
+        <p class="life-container" *ngFor="let product of products; let i = index" (click)="removeItem(i)">
+          {{product}}
+        </p>
+      </div>
+    </div>
