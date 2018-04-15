@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "algorithm",
-    "description": "API for algorithm calculator",
+    "title": "planner",
+    "description": "API for meal planner",
     "version": "0.0.1"
   },
   "consumes": ["application/json"],
@@ -62,8 +62,8 @@
         }
       }
     },
-    "/getMealPlan": {
-      "x-swagger-router-controller": "algorithm",
+    "/nutritionist/v1/getMealPlans": {
+      "x-swagger-router-controller": "planner",
       "get": {
         "operationId": "getMealPlans",
          "description": "Generates meal plans by ingridians and nutrition constrains",

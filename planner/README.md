@@ -1,4 +1,4 @@
-# blue print Service
+# planner Service
 
 ## Versioning
 
@@ -20,7 +20,7 @@ monitoring routes
 
 microservices app
 
-/blueprintexample
+/getMealPlans
 
 ## How to build
 scripts/run.sh build
@@ -28,7 +28,7 @@ scripts/run.sh build
 scripts/run.sh up
 
 ## gu interface
-localhost:9000/docs/#/
+localhost:9100/docs/#/
 
 ### Notes
 Prerequisite Node 8.4.0
