@@ -1,0 +1,21 @@
+version: '2'
+services:
+  blueprint:
+    container_name: blue-print-container
+    image: blue-print-image
+    build:
+      context: .
+    volumes:
+      - /Volumes/linx/healthProject/log:/log
+      - ./:/var/app
+    env_file: ./variables.env
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "9000:9000"
+
+
+
+
+
+

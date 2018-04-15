@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "nutritionistBluePrint",
-    "description": "API for BluePrint",
+    "title": "algorithm",
+    "description": "API for algorithm calculator",
     "version": "0.0.1"
   },
   "consumes": ["application/json"],
@@ -62,11 +62,11 @@
         }
       }
     },
-    "/blueprintexample": {
-      "x-swagger-router-controller": "bluePrint",
+    "/getMealPlan": {
+      "x-swagger-router-controller": "algorithm",
       "get": {
-        "operationId": "bluePrintExample",
-         "description": "a base microservice structure and conventions",
+        "operationId": "getMealPlans",
+         "description": "Generates meal plans by ingridians and nutrition constrains",
          "responses": {
             "200": {
               "description": "Success",
@@ -96,11 +96,11 @@
         },
         "title": {
           "type": "string",
-          "description": "problem description and data"
+          "description": "problem description and data "
         },
         "status": {
           "type": "string",
-          "description": "code "
+          "description": "code"
         }
       }
     }
