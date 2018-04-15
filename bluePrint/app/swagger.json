@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "nutritionistBluePront",
+    "title": "nutritionistBluePrint",
     "description": "API for BluePrint",
     "version": "0.0.1"
   },
@@ -68,7 +68,7 @@
         "operationId": "bluePrintExample",
          "description": "a base microservice structure and conventions",
          "responses": {
-            "200": {          
+            "200": {
               "description": "Success",
               "schema": {
                 "type": "object"
