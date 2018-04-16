@@ -64,9 +64,20 @@
     },
     "/nutritionist/v1/getMealPlans": {
       "x-swagger-router-controller": "planner",
-      "get": {
+      "post": {
         "operationId": "getMealPlans",
          "description": "Generates meal plans by ingridians and nutrition constrains",
+         "parameters": [
+          {
+            "in": "body",
+            "name": "getMealPlansReq",
+            "description": "request object that includes meta data, products and constrains",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/getMealPlansReq"
+            }
+          }
+        ],
          "responses": {
             "200": {
               "description": "Success",
@@ -103,9 +114,105 @@
           "description": "code"
         }
       }
+    },
+    "getMealPlansReq": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "description": "meta data object",
+          "properties":{
+            "service":{
+              "type":"string"
+            },
+            "uuid":{
+              "type":"string"
+            }
+          }
+        },
+        "body":{
+          "type":"object",
+          "properties":{
+            "constrains":{
+              "type":"object",
+              "description": "rules to plan the meals by",
+              "properties":{
+                "maxCalories":{
+                  "type":"integer"
+                },
+                "macroMolecules":{
+                  "type":"object",
+                  "properties":{
+                    "carb":{
+                      "type":"integer"
+                    },
+                    "protein":{
+                      "type":"integer"
+                    },
+                    "fat":{
+                      "type":"integer"
+                    }
+                  }
+                }
+                
+
+              }
+            },
+            "products":{
+              "type":"array",
+              "items" : {
+                "$ref" : "#/definitions/product"
+              }
+            }
+          }
+        }
+      }
+    },
+    "product":{
+      "type":"object",
+      "description": "product properties ,macromulecules clories and amount",
+      "properties":{
+        "productId":{
+          "type":"integer"
+        },
+        "name":{
+          "type":"string"
+        },
+        "amount":{
+          "type":"object",
+          "description":"type of measurements to describe the amount of the product",
+          "properties":{
+            "numOfUnits":{
+              "type":"integer"
+            },
+            "grams":{
+              "type":"integer"
+            },
+            "ml":{
+              "type":"integer"
+            },
+            "cups":{
+              "type":"integer"
+            },
+            "spoons":{
+              "type":"integer"
+            }
+          }
+        },
+        "carbs":{
+          "type":"integer"
+        },
+        "proteins":{
+          "type":"integer"
+        },
+        "fats":{
+          "type":"integer"
+        }
+      }
     }
   }
 }
+
 
 
 

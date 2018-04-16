@@ -6,7 +6,7 @@ services:
     build:
       context: .
     volumes:
-      - /Volumes/linx/healthProject/log:/log
+      - data/log:/log
       - ./:/var/app
     env_file: ./variables.env
     environment:
