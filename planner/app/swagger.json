@@ -63,7 +63,7 @@
       }
     },
     "/nutritionist/v1/getMealPlans": {
-      "x-swagger-router-controller": "index",
+      "x-swagger-router-controller": "getMealPlans",
       "post": {
         "operationId": "getMealPlans",
          "description": "Generates meal plans by ingredients and nutrition constraints",
@@ -144,17 +144,17 @@
                 "macroMolecules":{
                   "type":"object",
                   "properties":{
-                    "carb":{
+                    "carbs":{
                       "type":"number"
                     },
-                    "protein":{
+                    "proteins":{
                       "type":"number"
                     },
-                    "fat":{
+                    "fats":{
                       "type":"number"
                     }
                   },
-                  "required":["carb", "protein","fat"]
+                  "required":["carbs", "proteins","fats"]
                 }
               },
               "required":["maxCalories", "macroMolecules"]
@@ -211,6 +211,9 @@
           "type":"number"
         },
         "fats":{
+          "type":"number"
+        },
+        "calories":{
           "type":"number"
         }
       },
