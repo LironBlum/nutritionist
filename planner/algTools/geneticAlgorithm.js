@@ -3,19 +3,24 @@
 //population = several chromosomes  = possible solutions
 
 
+
 /**
- * returns a chromosome = meals plan for one day
+ * returns a chromosome = meals plan
+ *
  * products are randomly chosen
  */
-function createChromosome(genes, chromosomeSize){
-    let chromosome = [];
-    let gene;
+function createChromosome(allGenes, chromosomeSize){
+    let chromosome = {
+        genes:[],
+        fitness:null
+    };
+    let randGene;
 
-    while(chromosome.length < chromosomeSize)
+    while(chromosome.genes.length < chromosomeSize)
     {
-        gene = genes[Math.floor(Math.random()*genes.length)]; //get random gene
-        if(!chromosome.includes(gene)){
-            chromosome.push(gene);
+        randGene = allGenes[Math.floor(Math.random()*allGenes.length)]; //get random gene
+        if(!chromosome.genes.includes(randGene)){
+            chromosome.genes.push(randGene);
         }
     }
     return chromosome;
@@ -27,18 +32,22 @@ function generateInitPopulation(genes, chromosomeSize, popSize){
     while(population.length < popSize){
         population.push(createChromosome(genes,chromosomeSize));
     }
-
     return population;
 }
 
 /**
- * return fitness of a given solution
- * @param solution
+ * set fitness score for each chromosome for population
+ * @param population
+ * @param constraints
+ * @param fitness
  */
 
-function fitness(solution) {
-
+function populationFitness(population, constraints, fitness) {
+    population.forEach(function (chromosome) {
+        chromosome.fitness = fitness(chromosome.genes, constraints);
+    });
 }
+
 
 /**
  * returns a NEW solution constructed of the old solution with a slight change (probably random change)
@@ -65,5 +74,6 @@ process.on('unhandledRejection', error => {
 module.exports = {
     createChromosome,
     generateInitPopulation,
+    populationFitness
 
 };
