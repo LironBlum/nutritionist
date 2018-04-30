@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">23.08% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/13</span>
+        <span class='fraction'>3/13</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>0/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">25% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>2/8</span>
       </div>
     </div>
     <p class="quiet">
@@ -75,10 +75,8 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -87,13 +85,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -104,27 +102,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >Object.defineProperty(global, '__stack', {</span>
-    get: <span class="fstat-no" title="function not covered" >fu</span>nction(){
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">Object.defineProperty(global, '__stack', {
+    get: <span class="fstat-no" title="function not covered" >function()</span>{
         let orig = <span class="cstat-no" title="statement not covered" >Error.prepareStackTrace;</span>
-<span class="cstat-no" title="statement not covered" >        Error.prepareStackTrace = <span class="fstat-no" title="function not covered" >fu</span>nction(_, stack){ <span class="cstat-no" title="statement not covered" >return stack; </span>};</span>
+<span class="cstat-no" title="statement not covered" >        Error.prepareStackTrace = <span class="fstat-no" title="function not covered" >function(</span>_, stack)<span class="cstat-no" title="statement not covered" >{</span> <span class="cstat-no" title="statement not covered" >return stack; }<span class="cstat-no" title="statement not covered" >;</span></span></span>
         let err = <span class="cstat-no" title="statement not covered" >new Error;</span>
-<span class="cstat-no" title="statement not covered" >        Error.captureStackTrace(err, arguments.callee);</span>
-        let stack = <span class="cstat-no" title="statement not covered" >err.stack;</span>
-<span class="cstat-no" title="statement not covered" >        Error.prepareStackTrace = orig;</span>
-<span class="cstat-no" title="statement not covered" >        return stack;</span>
+<span class="cstat-no" title="statement not covered" >        Error.captureStackTrace(err, a</span>rguments.callee);
+<span class="cstat-no" title="statement not covered" >        let stack = e</span>rr.stack;
+        Error.prepareStackTrace = orig;
+        return stack;
     }
 });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >Object.defineProperty(global, '__line', {</span>
-    get: <span class="fstat-no" title="function not covered" >fu</span>nction(){
-<span class="cstat-no" title="statement not covered" >        return __stack[1].getLineNumber();</span>
+Object.<span class="cstat-no" title="statement not covered" >defineProperty(global, '__line', {</span>
+    get: function(){
+        return __stack[1].getLineNumber();
     }
 });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >Object.defineProperty(global, '__func', {</span>
-    get: <span class="fstat-no" title="function not covered" >fu</span>nction(){
-<span class="cstat-no" title="statement not covered" >        return __stack[1].getFunctionName();</span>
+Object.<span class="cstat-no" title="statement not covered" >defineProperty(global, '__func', {</span>
+    get: function(){
+        return __stack[1].getFunctionName();
     }
 });
 &nbsp;
@@ -139,7 +139,7 @@
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Apr 16 2018 15:07:46 GMT+0300 (IDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 18 2018 23:10:06 GMT+0300 (IDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

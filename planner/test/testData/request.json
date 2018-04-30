@@ -7,9 +7,9 @@
         "constraints":{
             "maxCalories": 1700,
             "macroMolecules":{
-                "carb": 500,
-                "protein": 800,
-                "fat": 100
+                "carbs": 500,
+                "proteins": 800,
+                "fats": 100
             }
         },
         "products": [
@@ -25,7 +25,8 @@
                 },
                 "carbs":100,
                 "proteins":200,
-                "fats":20
+                "fats":20,
+                "calories":32
             },
             {
                 "productId":5661,
@@ -39,7 +40,8 @@
                 },
                 "carbs":10,
                 "proteins":200,
-                "fats":2
+                "fats":2,
+                "calories":34
             },
             {
                 "productId":7660,
@@ -53,7 +55,8 @@
                 },
                 "carbs":300,
                 "proteins":2,
-                "fats":2
+                "fats":2,
+                "calories":60
             },
             {
                 "productId":7261,
@@ -67,7 +70,8 @@
                 },
                 "carbs":10,
                 "proteins":100,
-                "fats":8
+                "fats":8,
+                "calories":90
             },
             {
                 "productId":7111,
@@ -81,7 +85,8 @@
                 },
                 "carbs":190,
                 "proteins":30,
-                "fats":8
+                "fats":8,
+                "calories":80
             },
             {
                 "productId":7661,
@@ -95,7 +100,8 @@
                 },
                 "carbs":100,
                 "proteins":20,
-                "fats":30
+                "fats":30,
+                "calories":310
             },
             {
                 "productId":7662,
@@ -109,7 +115,8 @@
                 },
                 "carbs":0,
                 "proteins":60,
-                "fats":60
+                "fats":60,
+                "calories":210
             },
             {
                 "productId":7663,
@@ -123,7 +130,8 @@
                 },
                 "carbs":100,
                 "proteins":10,
-                "fats":0
+                "fats":0,
+                "calories":20
             },
             {
                 "productId":7664,
@@ -137,7 +145,8 @@
                 },
                 "carbs":0,
                 "proteins":0,
-                "fats":5
+                "fats":5,
+                "calories":40
             },
             {
                 "productId":7965,
@@ -151,7 +160,8 @@
                 },
                 "carbs":80,
                 "proteins":10,
-                "fats":2
+                "fats":2,
+                "calories":30
             }
         ]
     }
