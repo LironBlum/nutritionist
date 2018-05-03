@@ -63,15 +63,15 @@
       }
     },
     "/nutritionist/v1/getMealPlans": {
-      "x-swagger-router-controller": "planner",
+      "x-swagger-router-controller": "getMealPlans",
       "post": {
         "operationId": "getMealPlans",
-         "description": "Generates meal plans by ingridians and nutrition constrains",
+         "description": "Generates meal plans by ingredients and nutrition constraints",
          "parameters": [
           {
             "in": "body",
             "name": "getMealPlansReq",
-            "description": "request object that includes meta data, products and constrains",
+            "description": "request object that includes meta data, products and constraints",
             "required": true,
             "schema": {
               "$ref": "#/definitions/getMealPlansReq"
@@ -128,52 +128,56 @@
             "uuid":{
               "type":"string"
             }
-          }
+          },
+          "required":["service","uuid"]
         },
         "body":{
           "type":"object",
           "properties":{
-            "constrains":{
+            "constraints":{
               "type":"object",
               "description": "rules to plan the meals by",
               "properties":{
                 "maxCalories":{
-                  "type":"integer"
+                  "type":"number"
                 },
                 "macroMolecules":{
                   "type":"object",
                   "properties":{
-                    "carb":{
-                      "type":"integer"
+                    "carbs":{
+                      "type":"number"
                     },
-                    "protein":{
-                      "type":"integer"
+                    "proteins":{
+                      "type":"number"
                     },
-                    "fat":{
-                      "type":"integer"
+                    "fats":{
+                      "type":"number"
                     }
-                  }
+                  },
+                  "required":["carbs", "proteins","fats"]
                 }
-                
-
-              }
+              },
+              "required":["maxCalories", "macroMolecules"]
             },
             "products":{
               "type":"array",
               "items" : {
                 "$ref" : "#/definitions/product"
-              }
+              },
+              "minItems":7
             }
-          }
+          },
+          "required":["constraints", "products"]
         }
-      }
+      },
+      "required": ["meta", "body"]
     },
     "product":{
       "type":"object",
-      "description": "product properties ,macromulecules clories and amount",
+      "description": "product properties ,macromolecules calories and amount",
       "properties":{
         "productId":{
-          "type":"integer"
+          "type":"number"
         },
         "name":{
           "type":"string"
@@ -183,32 +187,37 @@
           "description":"type of measurements to describe the amount of the product",
           "properties":{
             "numOfUnits":{
-              "type":"integer"
+              "type":"number"
             },
             "grams":{
-              "type":"integer"
+              "type":"number"
             },
             "ml":{
-              "type":"integer"
+              "type":"number"
             },
             "cups":{
-              "type":"integer"
+              "type":"number"
             },
             "spoons":{
-              "type":"integer"
+              "type":"number"
             }
-          }
+          },
+          "required": ["numOfUnits", "grams", "ml", "cups", "spoons"]
         },
         "carbs":{
-          "type":"integer"
+          "type":"number"
         },
         "proteins":{
-          "type":"integer"
+          "type":"number"
         },
         "fats":{
-          "type":"integer"
+          "type":"number"
+        },
+        "calories":{
+          "type":"number"
         }
-      }
+      },
+      "required":["productId", "name", "amount", "carbs", "proteins", "fats"]
     }
   }
 }
