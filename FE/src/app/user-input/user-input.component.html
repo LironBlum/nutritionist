@@ -1,53 +1,52 @@
-<div class="row custom-row">
-    <div class= "col-sm-5 custom-container jumbotron">
-         
-      <form class="form-horizontal">
-          <fieldset>
-            <legend>Sign Up</legend>
-        
-              <!-- Password Block -->
-              <div class="form-group">
-                <label for="maxCal">Maximum clories per day</label>
-                <input type="number"
-                  id="inputMaxCal"
-                  placeholder="1500">
-              </div>
-              <p>Macro Molecules</p>
-              <div class="form-group">
-                <label for="carbs" >Carbohydrates</label>
-                <input type="number"
-                  id="carbs"
-                  placeholder="200">
-              </div>
-              <div class="form-group">
-                  <label for="fats" >Fats</label>
-                  <input type="number"
-                    id="fats"
-                    placeholder="20">
-                </div>
-                <div class="form-group">
-                    <label for="proteins" >Proteins</label>
-                    <input type="number"
-                      id="proteins"
-                      placeholder="200">
-                  </div>
+<div *ngIf="!name; else forminfo">
+    <form [formGroup]="rForm" (ngSubmit)="addPost(rForm.value)">
+      <div class="form-container">
+        <div class="row columns">
+  
+          <h1>Enter your constrains here</h1>
+  
+          <label>Maximum clories per day
+            <input type="number" formControlName="maxCal" id="inputMaxCal" placeholder="1500">
+          </label>
+          <div class="alert" *ngIf="!rForm.controls['maxCal'].valid && rForm.controls['maxCal'].touched">{{ titleAlert }}</div>  
           
-            
-               
-              <!--- Terms and conditions Block -->
-               <div class="form-group checkbox">
-                <label>
-                  <input type="checkbox"> Confirm that you've read the Terms and 
-                  Conditions
-                </label>
-              </div>
-              
-             <!--- Buttons Block -->
-              <div class="form-group">
-                  <button type="reset" class="btn btn-default">Cancel</button>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-          </fieldset>
-      </form>
-    </div>
+          <p>Macro Molecules</p>
+          <label>Carbohydrates
+            <input type="number" formControlName="carbs" id="carbs" placeholder="200">
+          </label>
+          <div class="alert" *ngIf="!rForm.controls['carbs'].valid && rForm.controls['carbs'].touched">{{ titleAlert }}</div>  
+          
+          <label>Fats
+            <input type="number" formControlName="fats" id="fats" placeholder="20">
+          </label>
+          <div class="alert" *ngIf="!rForm.controls['fats'].valid && rForm.controls['fats'].touched">{{ titleAlert }}</div>  
+          
+          <label>Proteins
+            <input type="number" formControlName="proteins" id="proteins" placeholder="200">
+          </label>
+          <div class="alert" *ngIf="!rForm.controls['proteins'].valid && rForm.controls['proteins'].touched">{{ titleAlert }}</div>  
+        
+          <input type="submit" class="button expanded" value="Submit Form" [disabled]="!rForm.valid">
+        </div>
+      </div>
+    </form>
   </div>
+  
+  <ng-template #forminfo>
+    <div class="form-container">
+      <div class="row columns">
+          <p>{{ maxCal }}</p>
+          <p>{{ carbs }}</p>
+          <p>{{ fats }}</p>
+          <p>{{ proteins }}</p>
+      </div>
+    </div>
+  </ng-template>
+
+
+
+
+
+
+
+
