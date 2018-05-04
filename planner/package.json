@@ -27,7 +27,8 @@
     "uuid": "^3.2.1",
     "validator": "^8.2.0",
     "winston": "^2.4.1",
-    "winston-mongodb": "^2.0.10"
+    "winston-mongodb": "^2.0.10",
+    "mocha": "^3.5.0"
   },
   "nyc": {
     "reporter": [
@@ -46,6 +47,7 @@
   "scripts": {
     "start": "node ./start.js",
     "watch": "nodemon ./start.js",
+    "test": "mocha",
     "test:unit": "nyc --all mocha ./test/unitTest --recursive --compilers js:babel-core/register"
   }
 }

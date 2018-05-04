@@ -17,95 +17,140 @@
                 "productId":9666,
                 "name":"chicken",
                 "amount":{
-                    "numOfUnits":0.5,
-                    "grams":200,
+                    "numOfUnits":1,
+                    "grams":115,
                     "ml":0,
                     "cups":0,
                     "spoons":0
                 },
-                "carbs":100,
-                "proteins":200,
-                "fats":20,
-                "calories":32
+                "carbs":6,
+                "proteins":22,
+                "fats":6,
+                "calories":160
             },
             {
                 "productId":5661,
                 "name":"egg",
                 "amount":{
                     "numOfUnits":1,
-                    "grams":70,
+                    "grams":50,
                     "ml":0,
                     "cups":0,
                     "spoons":0
                 },
-                "carbs":10,
-                "proteins":200,
-                "fats":2,
-                "calories":34
+                "carbs":0,
+                "proteins":6,
+                "fats":5,
+                "calories":70
             },
             {
                 "productId":7660,
                 "name":"bread",
                 "amount":{
                     "numOfUnits":2,
-                    "grams":170,
+                    "grams":100,
                     "ml":0,
                     "cups":0,
                     "spoons":0
                 },
-                "carbs":300,
-                "proteins":2,
-                "fats":2,
-                "calories":60
+                "carbs":22,
+                "proteins":4,
+                "fats":1,
+                "calories":108
             },
             {
                 "productId":7261,
                 "name":"green beans",
                 "amount":{
                     "numOfUnits":0,
-                    "grams":270,
+                    "grams":100,
                     "ml":0,
-                    "cups":1.5,
+                    "cups":1,
                     "spoons":0
                 },
-                "carbs":10,
-                "proteins":100,
-                "fats":8,
-                "calories":90
+                "carbs":7,
+                "proteins":2,
+                "fats":0,
+                "calories":31
             },
             {
                 "productId":7111,
                 "name":"apple",
                 "amount":{
                     "numOfUnits":2,
-                    "grams":280,
+                    "grams":480,
                     "ml":0,
                     "cups":0,
                     "spoons":0
                 },
-                "carbs":190,
-                "proteins":30,
-                "fats":8,
-                "calories":80
+                "carbs":68,
+                "proteins":2,
+                "fats":0,
+                "calories":260
             },
             {
                 "productId":7661,
                 "name":"cheese",
                 "amount":{
-                    "numOfUnits":8,
-                    "grams":340,
+                    "numOfUnits":2,
+                    "grams":240,
                     "ml":0,
-                    "cups":0,
+                    "cups":1,
                     "spoons":0
                 },
-                "carbs":100,
-                "proteins":20,
-                "fats":30,
-                "calories":310
+                "carbs":10,
+                "proteins":28,
+                "fats":12,
+                "calories":260
             },
             {
                 "productId":7662,
                 "name":"tuna can",
+                "amount":{
+                    "numOfUnits":3,
+                    "grams":168,
+                    "ml":0,
+                    "cups":0,
+                    "spoons":0
+                },
+                "carbs":0,
+                "proteins":39,
+                "fats":0,
+                "calories":180
+            },
+            {
+                "productId":7663,
+                "name":"rice",
+                "amount":{
+                    "numOfUnits":1,
+                    "grams":180,
+                    "ml":0,
+                    "cups":1,
+                    "spoons":0
+                },
+                "carbs":44,
+                "proteins":5,
+                "fats":1,
+                "calories":205
+            },
+            {
+                "productId":7664,
+                "name":"onion",
+                "amount":{
+                    "numOfUnits":1,
+                    "grams":250,
+                    "ml":0,
+                    "cups":1,
+                    "spoons":0
+                },
+                "carbs":26,
+                "proteins":6,
+                "fats":10,
+                "calories":220
+            },
+            {
+                "productId":7965,
+                "name":"yogurt",
                 "amount":{
                     "numOfUnits":3,
                     "grams":300,
@@ -113,55 +158,10 @@
                     "cups":0,
                     "spoons":0
                 },
-                "carbs":0,
-                "proteins":60,
-                "fats":60,
-                "calories":210
-            },
-            {
-                "productId":7663,
-                "name":"rice",
-                "amount":{
-                    "numOfUnits":1,
-                    "grams":100,
-                    "ml":0,
-                    "cups":0,
-                    "spoons":0
-                },
-                "carbs":100,
-                "proteins":10,
-                "fats":0,
-                "calories":20
-            },
-            {
-                "productId":7664,
-                "name":"onion",
-                "amount":{
-                    "numOfUnits":4,
-                    "grams":400,
-                    "ml":0,
-                    "cups":0,
-                    "spoons":0
-                },
-                "carbs":0,
-                "proteins":0,
+                "carbs":16,
+                "proteins":16,
                 "fats":5,
-                "calories":40
-            },
-            {
-                "productId":7965,
-                "name":"yogurt",
-                "amount":{
-                    "numOfUnits":1,
-                    "grams":0,
-                    "ml":200,
-                    "cups":0,
-                    "spoons":0
-                },
-                "carbs":80,
-                "proteins":10,
-                "fats":2,
-                "calories":30
+                "calories":165
             }
         ]
     }

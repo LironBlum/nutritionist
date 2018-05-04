@@ -2,13 +2,11 @@
 //chromosome = solution = meals plan for one day - constructed of 6 genes
 //population = several chromosomes  = possible solutions
 
-
-
 /**
  * returns a chromosome = meals plan
- *
  * products are randomly chosen
  */
+
 function createChromosome(allGenes, chromosomeSize){
     let chromosome = {
         genes:[],
@@ -37,9 +35,9 @@ function generateInitPopulation(genes, chromosomeSize, popSize){
 
 /**
  * set fitness score for each chromosome for population
- * @param population
+ * @param population arr of optional meal plans
  * @param constraints
- * @param fitness
+ * @param fitness function to calc fitness
  */
 
 function populationFitness(population, constraints, fitness) {
@@ -48,6 +46,20 @@ function populationFitness(population, constraints, fitness) {
     });
 }
 
+/**
+ * 
+ * @param {*} population 
+ * @param {*} selectionSize  - amount of chromosomes (meal plans) to select 
+ * @param {*} selectionFunc - type of selection algorithm (roulette wheel, tournament etc.. )
+ */
+function selection(population, selectionSize, selectionFunc){
+    if(selectionSize > population.lenth) {
+        console.log('throw error: selectionSize cant be bigger then population size' );
+        return null;
+    }
+    const selectedPop = selectionFunc(population, selectionSize);
+    //return selectedPop;
+}
 
 /**
  * returns a NEW solution constructed of the old solution with a slight change (probably random change)
@@ -74,6 +86,6 @@ process.on('unhandledRejection', error => {
 module.exports = {
     createChromosome,
     generateInitPopulation,
-    populationFitness
-
+    populationFitness,
+    selection
 };
