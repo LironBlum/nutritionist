@@ -1,0 +1,21 @@
+version: '2'
+services:
+  userdata:
+    container_name: user-data-container
+    image: user-data-image
+    build:
+      context: .
+    volumes:
+      - /data/log:/log
+      - ./:/var/app
+    env_file: ./variables.env
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "9200:9200"
+
+
+
+
+
+
