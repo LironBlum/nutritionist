@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const grader = require("../../../algTools/mealPlanFitnessGrader");
+const grader = require("../../../algTools/mealPlanFitness");
 const graderParams = require("../../testData/graderParams.json")
 
 
