@@ -2,6 +2,9 @@
 //chromosome = solution = meals plan for one day - constructed of 6 genes
 //population = several chromosomes  = possible solutions
 
+const _= require("lodash");
+const reproduction = require("./reproduction");
+
 /**
  * returns a chromosome = meals plan
  * products are randomly chosen
@@ -46,36 +49,41 @@ function populationFitness(population, constraints, fitness) {
     });
 }
 
-/**
- * 
- * @param {*} population 
- * @param {*} selectionSize  - amount of chromosomes (meal plans) to select 
- * @param {*} selectionFunc - type of selection algorithm (roulette wheel, tournament etc.. )
- */
-function selection(population, selectionSize, selectionFunc){
-    if(selectionSize > population.lenth) {
-        console.log('throw error: selectionSize cant be bigger then population size' );
-        return null;
+
+function evolvePopulation(population) {
+    let newPopulation = [];
+
+    console.log(`line 56, population: `);
+    printPop(population);
+
+    if(process.env.ELITISM === 'true'){
+      console.log("here")
+
+      let temp = _.minBy(population, 'fitness');
+        newPopulation[0] = _.cloneDeep( temp );
+      console.log(`newPopulation[0]: ${JSON.stringify(newPopulation[0])}`);
+      let index = population.indexOf(temp);
+      if (index > -1) {
+        population.splice(index, 1); //remove best solutions from orig generation
+      }
+
+      printPop(population)
     }
-    const selectedPop = selectionFunc(population, selectionSize);
-    //return selectedPop;
+
+    const reproductionFunction = `reproduction${process.env.SELECTION_TYPE}`;
+   newPopulation = reproduction["reproductionTournament"](population);
+  //newPopulation = reproduction.reproductionTournament(population);
+
+    console.log(`line 64, newPopulation: `);
+    printPop(newPopulation);
+    return newPopulation;
 }
 
-/**
- * returns a NEW solution constructed of the old solution with a slight change (probably random change)
- * @param solution
- */
-function mutate(solution) {
 
-}
 
-/**
- * parent1, parent2 - existing solutions to act as parents for new one
- * @param solution
- */
-function crossover(parent1, parent2) {
 
-}
+
+
 
 process.on('unhandledRejection', error => {
     // Won’t execute
@@ -83,9 +91,23 @@ process.on('unhandledRejection', error => {
 });
 
 
+function printPop(pop) {
+  console.log(`#####################################################`);
+
+  for(let i=0; i<pop.length; i++){
+    console.log(`{ ${pop[i].genes[0].name} } , { ${pop[i].genes[1].name} } , { ${pop[i].genes[2].name} } `);
+    console.log(`{ ${pop[i].genes[3].name} } , { ${pop[i].genes[4].name} } , { ${pop[i].genes[5].name} } , fitness: ${pop[i].fitness}\n`);
+  }
+
+  console.log(`#####################################################`);
+
+
+}
+
+
 module.exports = {
-    createChromosome,
-    generateInitPopulation,
-    populationFitness,
-    selection
+  createChromosome,
+  generateInitPopulation,
+  populationFitness,
+  evolvePopulation
 };
