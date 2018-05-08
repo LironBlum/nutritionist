@@ -1,8 +1,8 @@
 version: '2'
 services:
-  blueprint:
-    container_name: blue-print-container
-    image: blue-print-image
+  userdata:
+    container_name: user-data-container
+    image: user-data-image
     build:
       context: .
     volumes:
@@ -12,7 +12,7 @@ services:
     environment:
       - NODE_ENV=development
     ports:
-      - "9000:9000"
+      - "9200:9200"
 
 
 

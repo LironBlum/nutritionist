@@ -1,0 +1,54 @@
+{
+  "name": "userData",
+  "version": "0.0.1",
+  "main": "start.js",
+  "dependencies": {
+    "async": "^2.6.0",
+    "axios": "^0.16.2",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "dotenv": "^4.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "express": "^4.16.3",
+    "jstoxml": "^1.3.2",
+    "lodash": "^4.17.5",
+    "mongoose": "^4.13.12",
+    "nodemon": "^1.17.3",
+    "nyc": "^11.6.0",
+    "promise": "^8.0.1",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
+    "sinon": "^4.5.0",
+    "swagger-tools": "^0.10.3",
+    "uuid": "^3.2.1",
+    "validator": "^8.2.0",
+    "winston": "^2.4.1",
+    "winston-mongodb": "^2.0.10"
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "exclude": [
+      "**/*.yml",
+      "start.js",
+      "scripts",
+      "test",
+      "coverage",
+      "routes"
+    ]
+  },
+  "scripts": {
+    "start": "node ./start.js",
+    "watch": "nodemon ./start.js",
+    "test": "mocha",
+    "test:unit": "nyc --all mocha ./test/unitTests --recursive --opts ./test/unitTests/mocha.opts --compilers js:babel-core/register",
+    "debug": "node --inspect ./start.js"
+  }
+}
