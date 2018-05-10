@@ -9,7 +9,6 @@ let env = process.env;
 
 const chromosomeSize = parseInt(env.CHROMOSOME_SIZE);
 const popSize = parseInt(env.POPULATION_SIZE);
-const selectionSize = parseInt(env.SELECTION_SIZE);
 let constraints, products;
 
 function getMealPlans(req,res) {
@@ -22,8 +21,7 @@ function getMealPlans(req,res) {
     products = req.body.body.products;
 
     const mealPlans = executeAlgorithm(constraints, products);
-
-	res.status(200).json({ getMealPlans: 'getMealPlans'});
+    res.status(200).json({ getMealPlans: 'getMealPlans'});
 }
 
 /*-----------------------------------------------------------------------------------------------*/

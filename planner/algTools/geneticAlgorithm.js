@@ -53,28 +53,12 @@ function populationFitness(population, constraints, fitness) {
 function evolvePopulation(population) {
     let newPopulation = [];
 
-    console.log(`line 56, population: `);
-    printPop(population);
-
     if(process.env.ELITISM === 'true'){
-      console.log("here")
-
-      let temp = _.minBy(population, 'fitness');
-        newPopulation[0] = _.cloneDeep( temp );
-      console.log(`newPopulation[0]: ${JSON.stringify(newPopulation[0])}`);
-      let index = population.indexOf(temp);
-      if (index > -1) {
-        population.splice(index, 1); //remove best solutions from orig generation
-      }
-
-      printPop(population)
+      newPopulation.push(reproduction.elitism(population));
     }
 
-    const reproductionFunction = `reproduction${process.env.SELECTION_TYPE}`;
-   newPopulation = reproduction["reproductionTournament"](population);
-  //newPopulation = reproduction.reproductionTournament(population);
+    newPopulation.push(reproduction.populationReproduction);
 
-    console.log(`line 64, newPopulation: `);
     printPop(newPopulation);
     return newPopulation;
 }

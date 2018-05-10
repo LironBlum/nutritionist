@@ -1,118 +1,54 @@
 const _= require("lodash");
+const MealPlanSelection = require('./MealPlanSelection');
+require('../logging/stackTraceInfo');
+const logger = require('../logging/logger').logger;
+const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging purposes
 
 
-/**
- * This is reproduction stage: selection + cross + mutation
- * The reproduction functions differ by the type of selection
- */
-
-
-
-function reproductionRouletteWheel(population) {
-
+//TODO: refactor elitism to return more then one best chromosome
+function elitism(population) {
   let newPopulation = [];
-  let matingPool = [];
+  let bestChromosome = _.minBy(population, 'fitness');
+  newPopulation.push(_.cloneDeep( bestChromosome ));
+
+  let index = population.indexOf(temp);
+  if (index > -1) {
+    population.splice(index, 1); //remove best solutions from orig generation
+  }
+  return newPopulation;
+}
 
 
-  /*  --- create mating pool -- */
-  for (let i = 0; i < population.length; i++) {
+function populationReproduction(population){
+  const selectionOperator = new  MealPlanSelection(population);
+  const selectionType = process.env.SELECTION_TYPE;
+  const mutationRate = process.env.MUTATION_RATE;
+  let newPopulation = [];
 
-   // Add each member n times according to its fitness score.
-    let n = int(population[i].fitness * 100);
-    for (let j = 0; j < n; j++) {
-      matingPool[i] = population[i];
+  for(let i=0; i<population.length; i++){
+    //selection
+    let parentA = selectionOperator[selectionType];
+    let parentB = selectionOperator[selectionType];
+    //crossover
+    newPopulation.push(crossover(parentA,parentB));
+  }
+
+  //mutate population
+  newPopulation.forEach((chromosome) => {
+    if (Math.random() <= mutationRate) {
+      mutate(chromosome)
     }
-  }
-
-  /** -- selection + crossover  -- **/
-
-  for (let i = 0; i < population.length; i++) {
-    let a = parseInt(random(matingPool.length()));
-    let b = parseInt(random(matingPool.length()));
-    let parentA = matingPool[a];
-    let parentB = matingPool[b];
-    let child = crossover(parentA, parentB);
-    newPopulation[i] = child;
-  }
-
-  /* -- mutate population -- */
-  for (let i = 0; i < newPopulation.length(); i++) {
-    newPopulation[i] = mutate(newPopulation[i]);
-  }
-
+  });
   return newPopulation;
-}
-
-
-function reproductionRankRouletteWheel(population){
-    let fitnessSum = 0;
-    let prevProbability = 0;
-    let pop = _.cloneDeep(population);
-
-    pop.forEach(chromosome => {
-        fitnessSum += chromosome.fitness;
-    });
-
-    pop = _.sortBy(pop, 'fitness').reverse();
-    pop.forEach(chromosome => {
-        chromosome.prob = prevProbability + (chromosome.fitness/fitnessSum);
-        prevProbability = chromosome.prob;
-    });
-
-    //LAST SESSION STOPPED HERE. NOW GET A RANDOM NUMBER AND CHOOSE A CR BY IT (BY WIKIPEDIA)
-
-}
-
-
-function reproductionTournament(population) {
-
-  let newPopulation = [];
-
-  console.log(`in reproductionTournament`);
-  /** -- selection + crossover  -- **/
-  for (let i = 0; i < population.length; i++) {
-    const parentA  = tournamentSelection(population);
-    const parentB = tournamentSelection(population);
-    newPopulation[i] = crossover(parentA, parentB);
-  }
-
-  /* -- mutate population -- */
-  for (let i = 0; i < newPopulation.length(); i++) {
-    newPopulation[i] = mutate(newPopulation[i]);
-  }
-
-  return newPopulation;
-}
-
-function tournamentSelection(population) {
-
-  let tournamentPop = [];
-  const tournamentSize = process.env.TOURNAMENT_SIZE;
-
-  console.log("tournamentSelection");
-
-  /* -- create tournament population -- */
-  for(let i=0; i< tournamentSize ; i++){
-    tournamentPop[i] = (Math.random() * population.length);
-  }
-
-  /* -- select the fittest (lowest is best) -- */
- return _.minBy(tournamentPop, 'fitness');
-
-}
-
-function random (low, high) {
-    return Math.random() * (high - low) + low;
 }
 
 
 /**
- * returns a NEW solution constructed of the old solution with a slight change (probably random change)
+ * adds a random new product (gene) into the mealPlan (chromosome)
  * @param chromosome
  */
 function mutate(chromosome) {
 
-  console.log(`in MUTATE (line 112), chromosome: ${JSON.stringify(chromosome)}`);
   return chromosome;
 }
 
@@ -120,7 +56,16 @@ function mutate(chromosome) {
  * parent1, parent2 - existing solutions to act as parents for new one
  */
 function crossover(parentA, parentB) {
-  console.log(`in crossover (line 112), parentA: ${JSON.stringify(parentA)}, parentB: ${JSON.stringify(parentB)}`);
+
+  //TODO: to make sure products are not inserted to a meal plan more
+  // times than they exist in "product bag".
+  // think about the "products bag", maybe as singletone?
+
+
+  let msg = `parentA: ${JSON.stringify(parentA)}, parentB: ${JSON.stringify(parentB)}`;
+  let locationMeta = `${location}, func: ${ __func},line:${ __line}`;
+  logger.debug(msg, {'meta': locationMeta});
+
   const uniformRate = process.env.UNIFORM_RATE;
   let child = {
     genes:[],
@@ -133,9 +78,11 @@ function crossover(parentA, parentB) {
     child.genes[i] = (i < parentA.length * uniformRate)? parentA.genes[i] : child.genes[i];
   }
 
-  console.log(`in crossover (line 132), child: ${JSON.stringify(child)}`);
-  return child;
+  msg = `child: ${JSON.stringify(child)}`;
+  locationMeta = `${location}, func: ${ __func},line:${ __line}`;
+  logger.debug(msg, {'meta': locationMeta});
 
+  return child;
 
 }
 
@@ -143,9 +90,8 @@ function crossover(parentA, parentB) {
 
 
 module.exports = {
-  reproductionRouletteWheel,
-  reproductionRankRouletteWheel,
-  reproductionTournament
+  elitism,
+ populationReproduction
 };
 
 
