@@ -1,9 +1,11 @@
 'use strict';
+const _= require("lodash");
 require('../logging/stackTraceInfo');
 const logger = require('../logging/logger').logger;
 const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging purposes
 const genAlg = require('../algTools/geneticAlgorithm');
 const planGrader = require('../algTools/mealPlanFitness');
+let MealPlanChromosome = require("../algTools/MealPlanChromosome");
 
 let env = process.env;
 
@@ -29,24 +31,26 @@ function getMealPlans(req,res) {
 function executeAlgorithm(constraints, products) {
   let generationCounter = 1;
   let generations = process.env.NUMBER_OF_GENERATIONS;
+  let mappedProducts = new Map(products.map((i) => [i.name, i.info]));
 
+  let pop = genAlg.generateInitPopulation(mappedProducts, chromosomeSize, popSize);
+  genAlg.populationFitness(pop, constraints, planGrader.planFitness);
 
-  let pop = genAlg.generateInitPopulation(products, chromosomeSize, popSize);
-
-  console.log(`FIRST POPULATION:  `);
+  console.log("first population!!!!!!!!");
   printPopulation(pop);
 
-    //loop
+
+    //algorithm loop
     while(generationCounter <= generations){
+
+      pop = genAlg.evolvePopulation(pop, mappedProducts);
       genAlg.populationFitness(pop, constraints, planGrader.planFitness);
-      let newPop = genAlg.evolvePopulation(pop);
-
-      console.log('NEW POPULATION');
-      printPopulation(newPop);
-      pop = newPop;
-
+      generationCounter++;
     }
 
+    console.log("last population!!!!!!!!!!");
+    pop =  _.sortBy(pop, 'fitness');
+    printPopulation(pop);
     return pop;
 }
 
@@ -54,14 +58,19 @@ function printPopulation(pop) {
   console.log(`@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
 
   for(let i=0; i<pop.length; i++){
-    console.log(`{ ${pop[i].genes[0].name} } , { ${pop[i].genes[1].name} } , { ${pop[i].genes[2].name} } `);
-    console.log(`{ ${pop[i].genes[3].name} } , { ${pop[i].genes[4].name} } , { ${pop[i].genes[5].name} } \n`);
+    console.log(`----------------------------${i}------------------------------------`);
+
+   console.log(`{ ${pop[i].genes.forEach(MealPlanChromosome.logChromosomeGenes)} }  `);
+   console.log("fitness", pop[i].fitness);
+   console.log('------------------------------------------------------------------')
   }
 
   console.log(`@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
 
+}
 
-
+function logProducts(value, key, map) {
+  console.log(`products[${key}] = ${JSON.stringify(value)}`);
 }
 
 module.exports = {
@@ -73,10 +82,10 @@ module.exports = {
 
 
 
-
+/*
 
 
   process.on('unhandledRejection', error => {
     // Won’t execute
     console.log('unhandledRejection', error);
-  });
+  });*/
