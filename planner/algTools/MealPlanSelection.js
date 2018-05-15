@@ -33,7 +33,7 @@ class MealPlanSelection {
       fitnessSum += chromosome.fitness;
     });
 
-     this.selectionPool = _.sortBy(pop, 'fitness').reverse();
+     this.selectionPool = _.sortBy(population, 'fitness').reverse();
      this.selectionPool.forEach(chromosome => {
       chromosome.prob = prevProbability + (chromosome.fitness/fitnessSum);
       prevProbability = chromosome.prob;
@@ -46,13 +46,18 @@ class MealPlanSelection {
    * @param population
    * @returns {*}
    */
-  tournament() {
+  Tournament() {
+
      let tournamentPop = [];
-     const tournamentSize = process.env.TOURNAMENT_SIZE;
+     const tournamentSize = parseInt(process.env.TOURNAMENT_SIZE);
+
 
      /* -- create tournament population -- */
-     for(let i=0; i< tournamentSize ; i++){
-       tournamentPop[i] = (Math.random() * this.selectionPool.length);
+     while( tournamentPop.length < tournamentSize){
+       let randIndex = parseInt(Math.random() * this.selectionPool.length);
+       if(randIndex < this.selectionPool.length){
+       tournamentPop.push(this.selectionPool[randIndex]);
+       }
      }
 
      /* -- select the fittest (lowest is best) -- */
