@@ -1,46 +1,88 @@
 const _= require("lodash");
 const MealPlanSelection = require('./MealPlanSelection');
+const MealPlanChromosome = require('./MealPlanChromosome');
 require('../logging/stackTraceInfo');
 const logger = require('../logging/logger').logger;
 const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging purposes
 
 
-//TODO: refactor elitism to return more then one best chromosome
-function elitism(population) {
-  let newPopulation = [];
-  let bestChromosome = _.minBy(population, 'fitness');
-  newPopulation.push(_.cloneDeep( bestChromosome ));
 
-  let index = population.indexOf(temp);
-  if (index > -1) {
-    population.splice(index, 1); //remove best solutions from orig generation
+function elitism(population) {
+  let eliteChromosomes = [];
+  const elitismSize = parseInt(process.env.ELITISM_SIZE);
+
+  population =  _.sortBy(population, 'fitness');
+
+  while (eliteChromosomes.length < elitismSize) {
+    let bestChromosome = population[0];
+    eliteChromosomes.push(bestChromosome);
+    population.splice(0, 1); //remove best solutions from orig generation
   }
-  return newPopulation;
+
+  return eliteChromosomes;
 }
 
 
-function populationReproduction(population){
+function populationReproduction(population , allGenes){
   const selectionOperator = new  MealPlanSelection(population);
-  const selectionType = process.env.SELECTION_TYPE;
-  const mutationRate = process.env.MUTATION_RATE;
-  let newPopulation = [];
 
-  for(let i=0; i<population.length; i++){
+  const mutationRate = parseInt(process.env.MUTATION_RATE);
+  const newPopSize = parseInt(process.env.POPULATION_SIZE) - parseInt(process.env.ELITISM_SIZE);
+  let newPopulation = [];
+  let i=0;
+
+  while(i<newPopSize){
     //selection
-    let parentA = selectionOperator[selectionType];
-    let parentB = selectionOperator[selectionType];
+    let parentA = selectionOperator[selectionOperator.selectionType]();
+    let parentB = selectionOperator[selectionOperator.selectionType]();
+
     //crossover
-    newPopulation.push(crossover(parentA,parentB));
+    let child = crossover(parentA,parentB);
+    if(child.validateChromosome(allGenes)) { //if crossover didn't create a valid child repeat steps
+      newPopulation.push(child);
+      i++;
+    }
   }
 
   //mutate population
-  newPopulation.forEach((chromosome) => {
+ /* newPopulation.forEach((chromosome) => {
     if (Math.random() <= mutationRate) {
       mutate(chromosome)
+
     }
-  });
+  });*/
+
   return newPopulation;
 }
+
+
+/**
+ * parent1, parent2 - existing solutions to act as parents for new one
+ */
+function crossover(parentA, parentB) {
+
+
+  const uniformRate = process.env.UNIFORM_RATE;
+  let child = new MealPlanChromosome([],parentA.chromosomeSize, false);
+  let i = 0;
+  let genePool;
+  let randGene;
+
+  // Loop through genes
+  while (i < parentA.chromosomeSize) {
+    genePool = (i < parentA.genes.size * uniformRate)? parentA.genes :parentB.genes;
+    randGene = MealPlanChromosome.getRandomKey(genePool);
+
+    if(!child.genes.has(randGene)){ //set new
+       child.genes.set(randGene, _.cloneDeep(genePool.get(randGene)));
+    }else { // add amount
+      child.genes.get(randGene).amount.numOfUnits =  child.genes.get(randGene).amount.numOfUnits + genePool.get(randGene).amount.numOfUnits ;
+    }
+    i++;
+  }
+  return child;
+}
+
 
 
 /**
@@ -49,45 +91,19 @@ function populationReproduction(population){
  */
 function mutate(chromosome) {
 
+  //make sure mutation creates a valid chrosome.
+  //only if it does, copy into original chromosome and done
   return chromosome;
 }
 
-/**
- * parent1, parent2 - existing solutions to act as parents for new one
- */
-function crossover(parentA, parentB) {
-
-  //TODO: to make sure products are not inserted to a meal plan more
-  // times than they exist in "product bag".
-  // think about the "products bag", maybe as singletone?
 
 
-  let msg = `parentA: ${JSON.stringify(parentA)}, parentB: ${JSON.stringify(parentB)}`;
-  let locationMeta = `${location}, func: ${ __func},line:${ __line}`;
-  logger.debug(msg, {'meta': locationMeta});
+function printChromosome(who, genes) {
 
-  const uniformRate = process.env.UNIFORM_RATE;
-  let child = {
-    genes:[],
-    fitness:null
-  };
-
-  // Loop through genes
-  for (let i = 0; i < parentA.length; i++) {
-    // Crossover
-    child.genes[i] = (i < parentA.length * uniformRate)? parentA.genes[i] : child.genes[i];
-  }
-
-  msg = `child: ${JSON.stringify(child)}`;
-  locationMeta = `${location}, func: ${ __func},line:${ __line}`;
-  logger.debug(msg, {'meta': locationMeta});
-
-  return child;
+  console.log(`***** ${who} ***** `);
+  console.log(`{ ${genes.forEach(MealPlanChromosome.logChromosomeGenes)} }  `);
 
 }
-
-
-
 
 module.exports = {
   elitism,
