@@ -4,34 +4,16 @@
 
 const _= require("lodash");
 const reproduction = require("./reproduction");
+let MealPlanChromosome = require("./MealPlanChromosome");
 
-/**
- * returns a chromosome = meals plan
- * products are randomly chosen
- */
 
-function createChromosome(allGenes, chromosomeSize){
-    let chromosome = {
-        genes:[],
-        fitness:null
-    };
-    let randGene;
 
-    while(chromosome.genes.length < chromosomeSize)
-    {
-        randGene = allGenes[Math.floor(Math.random()*allGenes.length)]; //get random gene
-        if(!chromosome.genes.includes(randGene)){
-            chromosome.genes.push(randGene);
-        }
-    }
-    return chromosome;
-}
-
+/*genes are a map */
 function generateInitPopulation(genes, chromosomeSize, popSize){
     let population =[];
 
     while(population.length < popSize){
-        population.push(createChromosome(genes,chromosomeSize));
+        population.push(new MealPlanChromosome(genes,chromosomeSize));
     }
     return population;
 }
@@ -50,16 +32,18 @@ function populationFitness(population, constraints, fitness) {
 }
 
 
-function evolvePopulation(population) {
-    let newPopulation = [];
+function evolvePopulation(population, allGenes) {
+    let newPopulation;
+    let eliteChromosomes;
+    let childChromosomes;
 
     if(process.env.ELITISM === 'true'){
-      newPopulation.push(reproduction.elitism(population));
+      eliteChromosomes = reproduction.elitism(population);
     }
 
-    newPopulation.push(reproduction.populationReproduction);
+    childChromosomes = reproduction.populationReproduction(population,allGenes);
 
-    printPop(newPopulation);
+    newPopulation  = eliteChromosomes.concat(childChromosomes);
     return newPopulation;
 }
 
@@ -90,7 +74,6 @@ function printPop(pop) {
 
 
 module.exports = {
-  createChromosome,
   generateInitPopulation,
   populationFitness,
   evolvePopulation
