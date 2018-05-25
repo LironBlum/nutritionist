@@ -14,6 +14,7 @@ class MealPlanSelection {
     //call preparation function
     if (this.selectionType === 'RouletteWheel') {
       this.generateMatingPool(population);
+
     }else if(this.selectionType === 'Tournament'){
       this.selectionPool = _.cloneDeep(population);
     }

@@ -8,7 +8,7 @@ const chromosomeSize = 6;
 const popSize = 6;
 
 describe("genetic Algorithm", function() {
-    describe("test ~ createChromosome", function() {
+    describe("test ~ addNewGene", function() {
         it("Create a new chromosome (meal plan) with chromosomeSize of genes (products)", function() {
             const chromosome = geneticAlgorithm.createChromosome(request.body.products,chromosomeSize);
             expect(chromosome).to.have.property("genes");
@@ -32,12 +32,12 @@ describe("genetic Algorithm", function() {
             const initialPopSize = population.length;
             const constraints = fitParams.constraints
             geneticAlgorithm.populationFitness(population, constraints, fitFunc)
-            
+
             expect(population.length).to.equal(initialPopSize);
             population.forEach(chromosome => {
                 expect(chromosome.fitness!=null);
                 expect(chromosome.fitness).to.be.above(0);
-               
+
             });
         });
     });

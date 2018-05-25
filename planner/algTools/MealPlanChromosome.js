@@ -6,73 +6,56 @@ const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging 
 
 class MealPlanChromosome{
 
-  constructor(allGenes, chromosomeSize, randGenes = true){
 
-    this.genes = new Map();
+  constructor(genesPool, chromosomeSize){
+    this.genes = [];
     this.fitness = null;
     this.chromosomeSize = chromosomeSize;
-    if(randGenes){
-      this.createChromosome(allGenes);
+
+    if(genesPool.length > 0){
+      while(this.genes.length < chromosomeSize)
+      {
+        this.addNewGene(genesPool);
+      }
     }
   }
 
 
   /**
-   * returns a chromosome = meals plan
+   * adds a new VALID gene to list of genes
    * products are randomly chosen
    */
 
-  createChromosome(allGenes){
+  addNewGene(genesPool){
 
-    let randGene;
-    let i = 0;
-    while(i < this.chromosomeSize)
-    {
-      randGene = MealPlanChromosome.getRandomKey(allGenes);
-      if(!this.genes.has(randGene)){
-        this.genes.set(randGene, _.cloneDeep(allGenes.get(randGene)));
-        this.genes.get(randGene).amount.numOfUnits = 1;
-        i++;
-      }else if( this.genes.get(randGene).amount.numOfUnits < allGenes.get(randGene).amount.numOfUnits){
-        this.genes.get(randGene).amount.numOfUnits = this.genes.get(randGene).amount.numOfUnits  + 1;
-        i++;
+    let added = false;
+
+    while(!added) {
+      let i = Math.floor(Math.random() * genesPool.length);
+
+      //avoid duplicates of genes
+      if ((_.findIndex(this.genes, ['id', genesPool[i].id])) === -1) {
+        this.genes.push(_.cloneDeep(genesPool[i]));
+        added = true;
       }
     }
-
   }
 
   /**
-   * returns true if chromosome has less or equal to amount like in allGenes
-   * @param allGenes
+   * valid chromosome doesn't have duplicates
+   * return true if all id's in chromosome are unique
+   * @returns {boolean}
    */
-  validateChromosome(allGenes){
+  validateChromosome(){
+    const uniqArrLen = _.uniq(this.genes).length;
+    return uniqArrLen === this.genes.length;
+  }
 
-    //go over map of genes, if amount of gene is more than if fridge ,return false
-    this.genes.forEach((geneInfo, key ) =>{
-      if (geneInfo.amount.numOfUnits > allGenes.get(key).amount.numOfUnits){
-        return false;
-      }
+  logChromosomeGenes(){
+    this.genes.forEach( (g) =>{
+      console.log(`${g.name},${g.amount.numOfUnits}`)
     });
-
-    return true;
-
   }
-
-
-   static getRandomKey(genes) {
-    let index = Math.floor(Math.random() * genes.size);
-    let cntr = 0;
-    for (let key of genes.keys()) {
-      if (cntr++ === index) {
-        return key;
-      }
-    }
-  }
-
- static logChromosomeGenes(value, key, map) {
-    console.log(`genes[${key}] = ${JSON.stringify(value)}`);
-  }
-
 }
 
 

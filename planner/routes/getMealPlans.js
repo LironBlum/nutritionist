@@ -30,28 +30,28 @@ function getMealPlans(req,res) {
 
 function executeAlgorithm(constraints, products) {
   let generationCounter = 1;
-  let generations = process.env.NUMBER_OF_GENERATIONS;
-  let mappedProducts = new Map(products.map((i) => [i.name, i.info]));
+  let generations = parseInt(process.env.NUMBER_OF_GENERATIONS);
 
-  let pop = genAlg.generateInitPopulation(mappedProducts, chromosomeSize, popSize);
-  genAlg.populationFitness(pop, constraints, planGrader.planFitness);
+  let population = genAlg.generateInitPopulation(products, chromosomeSize, popSize);
+  genAlg.populationFitness(population, constraints, planGrader.planFitness);
 
-  console.log("first population!!!!!!!!");
-  printPopulation(pop);
+ // console.log("first population!!!!!!!!");
+  //printPopulation(population);
 
 
     //algorithm loop
     while(generationCounter <= generations){
 
-      pop = genAlg.evolvePopulation(pop, mappedProducts);
-      genAlg.populationFitness(pop, constraints, planGrader.planFitness);
+      population = genAlg.evolvePopulation(population, products);
+      genAlg.populationFitness(population, constraints, planGrader.planFitness);
       generationCounter++;
+
     }
 
-    console.log("last population!!!!!!!!!!");
-    pop =  _.sortBy(pop, 'fitness');
-    printPopulation(pop);
-    return pop;
+  //  console.log("last population!!!!!!!!!!");
+
+  //  printPopulation(population);
+    return population;
 }
 
 function printPopulation(pop) {
@@ -60,7 +60,7 @@ function printPopulation(pop) {
   for(let i=0; i<pop.length; i++){
     console.log(`----------------------------${i}------------------------------------`);
 
-   console.log(`{ ${pop[i].genes.forEach(MealPlanChromosome.logChromosomeGenes)} }  `);
+   console.log(` ${pop[i].logChromosomeGenes()}  \n`);
    console.log("fitness", pop[i].fitness);
    console.log('------------------------------------------------------------------')
   }
@@ -69,12 +69,11 @@ function printPopulation(pop) {
 
 }
 
-function logProducts(value, key, map) {
-  console.log(`products[${key}] = ${JSON.stringify(value)}`);
-}
+
 
 module.exports = {
-      getMealPlans
+      getMealPlans,
+  printPopulation
 
 };
 

@@ -3,7 +3,8 @@
 //population = several chromosomes  = possible solutions
 
 const _= require("lodash");
-const reproduction = require("./reproduction");
+const populationReproduction  = require("./reproduction").populationReproduction;
+const elitism = require("./mealPlanElitism").elitism;
 let MealPlanChromosome = require("./MealPlanChromosome");
 
 
@@ -13,7 +14,7 @@ function generateInitPopulation(genes, chromosomeSize, popSize){
     let population =[];
 
     while(population.length < popSize){
-        population.push(new MealPlanChromosome(genes,chromosomeSize));
+        population.push(new MealPlanChromosome(genes, chromosomeSize));
     }
     return population;
 }
@@ -32,19 +33,20 @@ function populationFitness(population, constraints, fitness) {
 }
 
 
-function evolvePopulation(population, allGenes) {
-    let newPopulation;
+function evolvePopulation(population) {
     let eliteChromosomes;
     let childChromosomes;
 
-    if(process.env.ELITISM === 'true'){
-      eliteChromosomes = reproduction.elitism(population);
+    if(process.env.IS_ELITISM === 'true'){
+      eliteChromosomes = elitism(population);
     }
 
-    childChromosomes = reproduction.populationReproduction(population,allGenes);
+    const reproductionSize = parseInt(process.env.POPULATION_SIZE) - eliteChromosomes.length;
 
-    newPopulation  = eliteChromosomes.concat(childChromosomes);
-    return newPopulation;
+    childChromosomes = populationReproduction(reproductionSize, population);
+
+    //elite chromosomes + reproduced chromosomes are the NEW POPULATION
+    return eliteChromosomes.concat(childChromosomes);
 }
 
 
@@ -58,19 +60,6 @@ process.on('unhandledRejection', error => {
     console.log('unhandledRejection', error);
 });
 
-
-function printPop(pop) {
-  console.log(`#####################################################`);
-
-  for(let i=0; i<pop.length; i++){
-    console.log(`{ ${pop[i].genes[0].name} } , { ${pop[i].genes[1].name} } , { ${pop[i].genes[2].name} } `);
-    console.log(`{ ${pop[i].genes[3].name} } , { ${pop[i].genes[4].name} } , { ${pop[i].genes[5].name} } , fitness: ${pop[i].fitness}\n`);
-  }
-
-  console.log(`#####################################################`);
-
-
-}
 
 
 module.exports = {

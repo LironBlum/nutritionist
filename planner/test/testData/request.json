@@ -7,172 +7,297 @@
         "constraints":{
             "maxCalories": 1700,
             "macroMolecules":{
-                "carbs": 500,
-                "proteins": 800,
-                "fats": 100
+                "carbs": 60,
+                "proteins": 20,
+                "fats": 15
             }
         },
         "products": [
-            {
-                "name":"chicken",
-                "info":{
-                    "amount":{
-                        "numOfUnits":4,
-                        "grams":115,
-                        "ml":0,
-                        "cups":0,
-                        "spoons":0
-                    },
-                    "carbs":6,
-                    "proteins":22,
-                    "fats":6,
-                    "calories":160
-                }
+          {
+            "id": "1996",
+            "name":"tofu",
+            "amount":{
+              "numOfUnits":1,
+              "grams":100,
+              "ml":0,
+              "cups":0,
+              "spoons":0
+            },
+            "carbs":3,
+            "proteins":15.5,
+            "fats":8,
+            "calories":137
+          },
+          {
+            "id": "1997",
+            "name":"pizza",
+            "amount":{
+              "numOfUnits":3,
+              "grams":500,
+              "ml":0,
+              "cups":0,
+              "spoons":0
+            },
+            "carbs":30,
+            "proteins":2,
+            "fats":8,
+            "calories":700
+          },
+          {
+            "id": "1998",
+            "name":"tomato",
+            "amount":{
+              "numOfUnits":1,
+              "grams":100,
+              "ml":0,
+              "cups":0,
+              "spoons":0
+            },
+            "carbs":2,
+            "proteins":2,
+            "fats":0,
+            "calories":37
+          },
+          {
+            "id": "1999",
+            "name":"chicken",
+            "amount":{
+              "numOfUnits":1,
+              "grams":115,
+              "ml":0,
+              "cups":0,
+              "spoons":0
+            },
+            "carbs":6,
+            "proteins":22,
+            "fats":6,
+            "calories":160
+          },
+          {
+                "id": "2000",
+                "name":"zukini",
+                "amount":{
+                    "numOfUnits":2,
+                    "grams":300,
+                    "ml":0,
+                    "cups":0,
+                    "spoons":0
+                },
+                "carbs":3,
+                "proteins":7,
+                "fats":0,
+                "calories":80
             },
             {
+                "id": "2001",
+                "name":"milk",
+                "amount":{
+                    "numOfUnits":1,
+                    "grams":0,
+                    "ml":300,
+                    "cups":0,
+                    "spoons":0
+                },
+                "carbs":2,
+                "proteins":7,
+                "fats":2,
+                "calories":70
+            },
+            {
+                "id": "2002",
                 "name":"egg",
-                "info":{
-                    "amount":{
-                    "numOfUnits":4,
+                "amount":{
+                    "numOfUnits":2,
                     "grams":50,
                     "ml":0,
                     "cups":0,
                     "spoons":0
                 },
-                    "carbs":0,
-                    "proteins":6,
-                    "fats":5,
-                    "calories":70
-                }
+                "carbs":0,
+                "proteins":6,
+                "fats":5,
+                "calories":70
             },
             {
+                "id": "2003",
+                "name":"broccoli",
+                "amount":{
+                    "numOfUnits":1,
+                    "grams":50,
+                    "ml":0,
+                    "cups":0,
+                    "spoons":0
+                },
+                "carbs":2,
+                "proteins":2,
+                "fats":0,
+                "calories":20
+            },
+            {
+                "id": "2004",
                 "name":"bread",
-                "info":{
-                   "amount":{
+                "amount":{
                    "numOfUnits":1,
                    "grams":25,
                    "ml":0,
                    "cups":0,
                    "spoons":0
                },
-                   "carbs":12,
-                   "proteins":2.3,
-                   "fats":0.8,
-                   "calories":66
-                }
+                "carbs":12,
+                "proteins":2.3,
+                "fats":0.8,
+                "calories":66
             },
             {
+                "id": "2005",
                 "name":"green beans",
-                "info":{
-                    "amount":{
+                "amount":{
                     "numOfUnits":1,
                     "grams":100,
                     "ml":0,
                     "cups":1,
                     "spoons":0
                 },
-                    "carbs":7,
-                    "proteins":2,
-                    "fats":0,
-                    "calories":31
-                }
+                "carbs":7,
+                "proteins":2,
+                "fats":0,
+                "calories":31
             },
             {
-                "name":"apple",
-                "info":{
-                    "amount":{
-                    "numOfUnits":2,
-                    "grams":182,
-                    "ml":0,
-                    "cups":0,
-                    "spoons":0
-                },
-                    "carbs":25,
-                    "proteins":0.5,
-                    "fats":0.3,
-                    "calories":95
-                }
+              "id": "2006",
+              "name":"apple",
+              "amount":{
+                  "numOfUnits":2,
+                  "grams":182,
+                  "ml":0,
+                  "cups":0,
+                  "spoons":0
+              },
+              "carbs":25,
+              "proteins":0.5,
+              "fats":0.3,
+              "calories":95
             },
             {
-                "name":"whiteCheese",
-                "info":{
-                   "amount":{
-                   "numOfUnits":2,
-                   "grams":250,
-                   "ml":0,
-                   "cups":0,
-                   "spoons":0
-               },
-                   "carbs":11,
-                   "proteins":23.5,
-                   "fats":7.5,
-                   "calories":205
-               }
+              "id": "2007",
+              "name":"whiteCheese",
+              "amount":{
+                  "numOfUnits":1,
+                  "grams":250,
+                  "ml":0,
+                  "cups":0,
+                  "spoons":0
+              },
+              "carbs":11,
+              "proteins":23.5,
+              "fats":7.5,
+              "calories":205
             },
             {
-                "name":"tuna can",
-                "info": {
-                   "amount":{
-                   "numOfUnits":3,
-                   "grams":112,
-                   "ml":0,
-                   "cups":0,
-                   "spoons":0
-               },
-                   "carbs":0,
-                   "proteins":25,
-                   "fats":0,
-                   "calories":104
-               }
+              "id": "2008",
+              "name":"tuna can",
+              "amount":{
+                  "numOfUnits":3,
+                  "grams":112,
+                  "ml":0,
+                  "cups":0,
+                  "spoons":0
+              },
+              "carbs":0,
+              "proteins":25,
+              "fats":0,
+              "calories":104
             },
             {
-                "name":"rice",
-                "info":{
-                   "amount":{
-                   "numOfUnits":1,
-                   "grams":100,
-                   "ml":0,
-                   "cups":1,
-                   "spoons":0
-               },
-                   "carbs":28,
-                   "proteins":2.7,
-                   "fats":0.3,
-                   "calories":130
-                }
+              "id": "2009",
+              "name":"rice",
+              "amount":{
+                  "numOfUnits":1,
+                  "grams":100,
+                  "ml":0,
+                  "cups":1,
+                  "spoons":0
+              },
+              "carbs":28,
+              "proteins":2.7,
+              "fats":0.3,
+              "calories":130
             },
             {
-                "name":"onion",
-                "info": {
-                    "amount":{
-                        "numOfUnits":1,
-                        "grams":250,
-                        "ml":0,
-                        "cups":1,
-                        "spoons":0
-                    },
-                    "carbs":26,
-                    "proteins":6,
-                    "fats":10,
-                    "calories":220
-                }
+              "id": "2010",
+              "name":"onion",
+              "amount":{
+                "numOfUnits":1,
+                "grams":250,
+                "ml":0,
+                "cups":1,
+                "spoons":0
+              },
+              "carbs":26,
+              "proteins":6,
+              "fats":10,
+              "calories":220
             },
             {
-                "name":"yogurt",
-                "info": {
-                    "amount":{
-                        "numOfUnits":3,
-                        "grams":100,
-                        "ml":0,
-                        "cups":0,
-                        "spoons":0
-                    },
-                    "carbs":3.6,
-                    "proteins":10,
-                    "fats":0.4,
-                    "calories":59
-                }
-            }
+              "id": "2011",
+              "name":"yogurt",
+              "amount":{
+                "numOfUnits":3,
+                "grams":100,
+                "ml":0,
+                "cups":0,
+                "spoons":0
+              },
+              "carbs":3.6,
+              "proteins":10,
+              "fats":0.4,
+              "calories":59
+            },
+          {
+            "id": "2012",
+            "name":"watermelon",
+            "amount":{
+              "numOfUnits":3,
+              "grams":100,
+              "ml":0,
+              "cups":0,
+              "spoons":0
+            },
+            "carbs":20,
+            "proteins":1,
+            "fats":0.4,
+            "calories":100
+          },
+          {
+            "id": "2013",
+            "name":"pasta",
+            "amount":{
+              "numOfUnits":1,
+              "grams":100,
+              "ml":0,
+              "cups":1,
+              "spoons":0
+            },
+            "carbs":30,
+            "proteins":2.7,
+            "fats":0.3,
+            "calories":500
+          },
+          {
+            "id": "2014",
+            "name":"oats",
+            "amount":{
+              "numOfUnits":1,
+              "grams":100,
+              "ml":0,
+              "cups":1,
+              "spoons":0
+            },
+            "carbs":10,
+            "proteins":5,
+            "fats":1,
+            "calories":50
+          }
         ]
     }
 }

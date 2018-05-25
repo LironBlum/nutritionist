@@ -7,53 +7,41 @@ const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging 
 
 
 
-function elitism(population) {
-  let eliteChromosomes = [];
-  const elitismSize = parseInt(process.env.ELITISM_SIZE);
-
-  population =  _.sortBy(population, 'fitness');
-
-  while (eliteChromosomes.length < elitismSize) {
-    let bestChromosome = population[0];
-    eliteChromosomes.push(bestChromosome);
-    population.splice(0, 1); //remove best solutions from orig generation
-  }
-
-  return eliteChromosomes;
-}
+function populationReproduction(newPopSize, population){
 
 
-function populationReproduction(population , allGenes){
-  const selectionOperator = new  MealPlanSelection(population);
-
+  const selectionObj = new  MealPlanSelection(population); //this is the obj of selection
+  const selectionType = selectionObj.selectionType;
   const mutationRate = parseInt(process.env.MUTATION_RATE);
-  const newPopSize = parseInt(process.env.POPULATION_SIZE) - parseInt(process.env.ELITISM_SIZE);
   let newPopulation = [];
   let i=0;
 
+  //TODO get rid of i
   while(i<newPopSize){
     //selection
-    let parentA = selectionOperator[selectionOperator.selectionType]();
-    let parentB = selectionOperator[selectionOperator.selectionType]();
+    let mom = selectionObj[selectionType]();
+    let dad = selectionObj[selectionType]();
 
     //crossover
-    let child = crossover(parentA,parentB);
-    if(child.validateChromosome(allGenes)) { //if crossover didn't create a valid child repeat steps
+    let child = crossover(mom,dad);
+    if(child.validateChromosome()) { //if crossover didn't create a valid child repeat steps
       newPopulation.push(child);
       i++;
     }
   }
 
   //mutate population
- /* newPopulation.forEach((chromosome) => {
-    if (Math.random() <= mutationRate) {
-      mutate(chromosome)
+  /* newPopulation.forEach((chromosome) => {
+     if (Math.random() <= mutationRate) {
+       mutate(chromosome)
 
-    }
-  });*/
+     }
+   });*/
 
   return newPopulation;
 }
+
+
 
 
 /**
@@ -61,25 +49,36 @@ function populationReproduction(population , allGenes){
  */
 function crossover(parentA, parentB) {
 
-
   const uniformRate = process.env.UNIFORM_RATE;
-  let child = new MealPlanChromosome([],parentA.chromosomeSize, false);
-  let i = 0;
-  let genePool;
-  let randGene;
+  const childChromosomeSize = (parentA.genes.length * uniformRate) + (parentB.genes.length * uniformRate);
+
+  let child = new MealPlanChromosome([], childChromosomeSize);
+
+  let genesPool;
+  console.log(' -----------------------------------------------------------------');
+
+  console.log(' ----------- parentA -----------------');
+  parentA.logChromosomeGenes();
+
+  console.log(' ----------- parentB -----------------');
+  parentB.logChromosomeGenes();
+
 
   // Loop through genes
-  while (i < parentA.chromosomeSize) {
-    genePool = (i < parentA.genes.size * uniformRate)? parentA.genes :parentB.genes;
-    randGene = MealPlanChromosome.getRandomKey(genePool);
+  while (child.genes.length < child.chromosomeSize) {
+    genesPool = (child.genes.length < parentA.genes.length * uniformRate)? parentA.genes : parentB.genes;
 
-    if(!child.genes.has(randGene)){ //set new
-       child.genes.set(randGene, _.cloneDeep(genePool.get(randGene)));
-    }else { // add amount
-      child.genes.get(randGene).amount.numOfUnits =  child.genes.get(randGene).amount.numOfUnits + genePool.get(randGene).amount.numOfUnits ;
+    let i =  Math.floor(Math.random() * genesPool.length);
+
+    if ((_.findIndex(child.genes, ['id', genesPool[i].id])) === -1) {
+      child.genes.push(_.cloneDeep(genesPool[i]));
     }
-    i++;
+
   }
+
+  console.log(' ----------- child -----------------');
+  child.logChromosomeGenes();
+
   return child;
 }
 
@@ -106,7 +105,6 @@ function printChromosome(who, genes) {
 }
 
 module.exports = {
-  elitism,
  populationReproduction
 };
 

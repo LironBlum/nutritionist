@@ -176,16 +176,16 @@
       "type":"object",
       "description": "product properties ,macromolecules calories and amount",
       "properties":{
+        "id":{
+          "type":"string"
+        },
         "name":{
           "type":"string"
         },
-        "info":{
+        "amount":{
           "type":"object",
-          "properties": {
-            "amount":{
-              "type":"object",
-              "description":"type of measurements to describe the amount of the product",
-              "properties":{
+          "description":"type of measurements to describe the amount of the product",
+          "properties":{
             "numOfUnits":{
               "type":"number"
             },
@@ -202,25 +202,22 @@
               "type":"number"
             }
           },
-              "required": ["numOfUnits", "grams", "ml", "cups", "spoons"]
+          "required": ["numOfUnits", "grams", "ml", "cups", "spoons"]
         },
-            "carbs":{
+        "carbs":{
           "type":"number"
         },
-            "proteins":{
+        "proteins":{
           "type":"number"
         },
-            "fats":{
+        "fats":{
           "type":"number"
         },
-            "calories":{
+        "calories":{
           "type":"number"
-        }
-          },
-          "required":["amount", "carbs", "proteins", "fats"]
         }
       },
-      "required":["name", "info"]
+      "required":["id", "name", "amount", "carbs", "proteins", "fats", "calories"]
     }
   }
 }
