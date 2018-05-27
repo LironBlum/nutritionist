@@ -3,9 +3,8 @@ const _= require("lodash");
 require('../logging/stackTraceInfo');
 const logger = require('../logging/logger').logger;
 const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging purposes
-const genAlg = require('../algTools/geneticAlgorithm');
+const { generateInitPopulation, populationFitness, evolvePopulation } = require('../algTools/geneticAlgorithm');
 const planGrader = require('../algTools/mealPlanFitness');
-let MealPlanChromosome = require("../algTools/MealPlanChromosome");
 
 let env = process.env;
 
@@ -29,28 +28,26 @@ function getMealPlans(req,res) {
 /*-----------------------------------------------------------------------------------------------*/
 
 function executeAlgorithm(constraints, products) {
-  let generationCounter = 1;
-  let generations = parseInt(process.env.NUMBER_OF_GENERATIONS);
 
-  let population = genAlg.generateInitPopulation(products, chromosomeSize, popSize);
-  genAlg.populationFitness(population, constraints, planGrader.planFitness);
+  let population = generateInitPopulation(products, chromosomeSize, popSize);
 
- // console.log("first population!!!!!!!!");
-  //printPopulation(population);
+  populationFitness(population, constraints, planGrader.planFitness); //TODO move fitness function call
 
+  //console.log("first population!!!!!!!!"); //TODO clean
+  //printPopulation(population); //TODO clean
 
-    //algorithm loop
-    while(generationCounter <= generations){
+  let generationCntr = 1;
+  let generations = parseInt(env.NUMBER_OF_GENERATIONS);
+  while(generationCntr <= generations){ //algorithm loop
 
-      population = genAlg.evolvePopulation(population, products);
-      genAlg.populationFitness(population, constraints, planGrader.planFitness);
-      generationCounter++;
+    population = evolvePopulation(population, products);
+    populationFitness(population, constraints, planGrader.planFitness);
+    ++generationCntr;
+  }
 
-    }
+  //  console.log("last population!!!!!!!!!!"); //TODO clean
+   // printPopulation(population); //TODO clean
 
-  //  console.log("last population!!!!!!!!!!");
-
-  //  printPopulation(population);
     return population;
 }
 
@@ -66,25 +63,9 @@ function printPopulation(pop) {
   }
 
   console.log(`@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
-
 }
 
-
-
 module.exports = {
-      getMealPlans,
+  getMealPlans,
   printPopulation
-
 };
-
-
-
-
-
-/*
-
-
-  process.on('unhandledRejection', error => {
-    // Won’t execute
-    console.log('unhandledRejection', error);
-  });*/

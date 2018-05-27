@@ -1,45 +1,25 @@
 const _ = require('lodash');
+const env = process.env;
 require('../logging/stackTraceInfo');
 const logger = require('../logging/logger').logger;
 const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging purposes
-//TODO: insert logger.debug, print content of selectionPool
-
+//TODO: insert logger.debug, print content of pool
 
 class MealPlanSelection {
-
   constructor(population) {
-    this.selectionType = process.env.SELECTION_TYPE;
-    this.selectionPool = [];  //this is either mating pool or population with ranks
+    this.selectionType = env.SELECTION_TYPE;
+    this.pool = [];  //selection pool
 
     //call preparation function
-    if (this.selectionType === 'RouletteWheel') {
-      this.generateMatingPool(population);
+    if (this.selectionType === 'RouletteWheel') { //TODO: not complete
+       this.pool = this.generateMatingPool(population);
 
     }else if(this.selectionType === 'Tournament'){
-      this.selectionPool = _.cloneDeep(population);
+      this.pool = _.cloneDeep(population);
+
     }
 
-    //insert rankRouletteWheel as an option here
-  }
-
-
-
-/* ----- TODO:  rankRouletteWheel NOT FINISHED!!!!! --------- */
-   rankRouletteWheel(population){
-    let fitnessSum = 0;
-    let prevProbability = 0;
-    this.selectionPool = _.cloneDeep(population);
-
-     this.selectionPool.forEach(chromosome => {
-      fitnessSum += chromosome.fitness;
-    });
-
-     this.selectionPool = _.sortBy(population, 'fitness').reverse();
-     this.selectionPool.forEach(chromosome => {
-      chromosome.prob = prevProbability + (chromosome.fitness/fitnessSum);
-      prevProbability = chromosome.prob;
-    });
-
+    //TODO: (optional) insert rankRouletteWheel as an option here
   }
 
   /**
@@ -48,21 +28,16 @@ class MealPlanSelection {
    * @returns {*}
    */
   Tournament() {
-
      let tournamentPop = [];
-     const tournamentSize = parseInt(process.env.TOURNAMENT_SIZE);
+    // const tournamentSize = parseInt(env.TOURNAMENT_SIZE);
+     const tournamentSize = env.TOURNAMENT_SIZE;
 
-
-     /* -- create tournament population -- */
-     while( tournamentPop.length < tournamentSize){
-       let randIndex = parseInt(Math.random() * this.selectionPool.length);
-       if(randIndex < this.selectionPool.length){
-       tournamentPop.push(this.selectionPool[randIndex]);
-       }
+     while( tournamentPop.length < tournamentSize){ //create tournament population
+       let randIndex = parseInt(Math.random() * this.pool.length);
+       tournamentPop.push(this.pool[randIndex]);
      }
 
-     /* -- select the fittest (lowest is best) -- */
-     return _.minBy(tournamentPop, 'fitness');
+     return _.minBy(tournamentPop, 'fitness'); // select fittest (lowest = best)
   }
 
   /**
@@ -70,8 +45,8 @@ class MealPlanSelection {
    * @returns {*}
    */
   rouletteWheel(){
-     const index = parseInt(random(this.selectionPool.length));
-     return this.selectionPool[index];
+     const index = parseInt(random(this.pool.length));
+     return this.pool[index];
   }
 
   /**
@@ -79,21 +54,33 @@ class MealPlanSelection {
    * generates the array chromosome will be selected from
    * @param population
    */
-  generateMatingPool(population){
-
-    /*  --- create mating pool -- */
+  generateMatingPool(population){ //TODO clean
+    let pool = [];
     for (let i = 0; i < population.length; i++) {
       let n = int(population[i].fitness * 100);
       for (let j = 0; j < n; j++) {  // Add each member n times according to its fitness score.
-        this.selectionPool[i] = population[i];
+        pool[i] = population[i];
       }
     }
+    return pool;
   }
 
-  random (low, high) {
-    return Math.random() * (high - low) + low;
-  }
+  /* ----- TODO:  rankRouletteWheel NOT FINISHED!!!!! --------- */
+  rankRouletteWheel(population){
+    let fitnessSum = 0;
+    let prevProbability = 0;
+    this.pool = _.cloneDeep(population);
 
+    this.pool.forEach(chromosome => {
+      fitnessSum += chromosome.fitness;
+    });
+
+    this.pool = _.sortBy(population, 'fitness').reverse();
+    this.pool.forEach(chromosome => {
+      chromosome.prob = prevProbability + (chromosome.fitness/fitnessSum);
+      prevProbability = chromosome.prob;
+    });
+  }
 }
 
 

@@ -3,19 +3,18 @@
 //population = several chromosomes  = possible solutions
 
 const _= require("lodash");
-const populationReproduction  = require("./reproduction").populationReproduction;
+let env = process.env;
+const populationReproduction = require("./reproduction").populationReproduction;
 const elitism = require("./mealPlanElitism").elitism;
-let MealPlanChromosome = require("./MealPlanChromosome");
+const MealPlanChromosome = require("./MealPlanChromosome");
 
-
-
-/*genes are a map */
 function generateInitPopulation(genes, chromosomeSize, popSize){
     let population =[];
 
     while(population.length < popSize){
         population.push(new MealPlanChromosome(genes, chromosomeSize));
     }
+
     return population;
 }
 
@@ -34,32 +33,18 @@ function populationFitness(population, constraints, fitness) {
 
 
 function evolvePopulation(population) {
-    let eliteChromosomes;
-    let childChromosomes;
+    let eliteChromosomes = [];
 
-    if(process.env.IS_ELITISM === 'true'){
-      eliteChromosomes = elitism(population);
+    if(env.IS_ELITISM === 'true'){
+       eliteChromosomes = elitism(population);
     }
+    const numChrmsToGenerate = parseInt(env.POPULATION_SIZE) - eliteChromosomes.length;
+    const generatedChromosomes = populationReproduction(numChrmsToGenerate, population);
 
-    const reproductionSize = parseInt(process.env.POPULATION_SIZE) - eliteChromosomes.length;
+    //new population = elite chromosomes + reproduced chromosomes
 
-    childChromosomes = populationReproduction(reproductionSize, population);
-
-    //elite chromosomes + reproduced chromosomes are the NEW POPULATION
-    return eliteChromosomes.concat(childChromosomes);
+    return eliteChromosomes.concat(generatedChromosomes);
 }
-
-
-
-
-
-
-
-process.on('unhandledRejection', error => {
-    // Won’t execute
-    console.log('unhandledRejection', error);
-});
-
 
 
 module.exports = {

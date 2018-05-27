@@ -1,17 +1,18 @@
 const _= require("lodash");
+const env = process.env
 
 function elitism(population) {
 
   let eliteChromosomes = [];
-  const elitismSize = parseInt(process.env.ELITISM_SIZE);
+  const elitismSize = parseInt(env.ELITISM_SIZE);
+  let best;
 
-  population =  _.sortBy(population, 'fitness');
+  population = _.sortBy(population, 'fitness');
 
   while (eliteChromosomes.length < elitismSize) {
-
-    let bestChromosome = population[0];
-    eliteChromosomes.push(bestChromosome);
-    population.splice(0, 1); //remove best solutions from orig generation
+    best = population[0];
+    eliteChromosomes.push(best);
+    population.splice(0, 1); //remove best solutions from orig population
   }
 
   return eliteChromosomes;

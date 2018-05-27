@@ -6,39 +6,34 @@ const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging 
 
 class MealPlanChromosome{
 
-
   constructor(genesPool, chromosomeSize){
     this.genes = [];
     this.fitness = null;
     this.chromosomeSize = chromosomeSize;
 
     if(genesPool.length > 0){
-      while(this.genes.length < chromosomeSize)
-      {
-        this.addNewGene(genesPool);
-      }
+      this.insertNewGenes(genesPool)
     }
+    //else create an empty chromosome
   }
-
 
   /**
    * adds a new VALID gene to list of genes
    * products are randomly chosen
    */
 
-  addNewGene(genesPool){
+  insertNewGenes(pool){
 
-    let added = false;
-
-    while(!added) {
-      let i = Math.floor(Math.random() * genesPool.length);
+    while(this.genes.length < this.chromosomeSize)
+    {
+      let randGene = Math.floor(Math.random() * pool.length);
 
       //avoid duplicates of genes
-      if ((_.findIndex(this.genes, ['id', genesPool[i].id])) === -1) {
-        this.genes.push(_.cloneDeep(genesPool[i]));
-        added = true;
+      if (this.isValidGene(pool[randGene])) {
+        this.genes.push(_.cloneDeep(pool[randGene]));
       }
     }
+
   }
 
   /**
@@ -49,6 +44,15 @@ class MealPlanChromosome{
   validateChromosome(){
     const uniqArrLen = _.uniq(this.genes).length;
     return uniqArrLen === this.genes.length;
+  }
+
+  /**
+   * returns TRUE if the id of gene doesn't exist in chromosome
+   * @param gene
+   * @returns {boolean}
+   */
+  isValidGene(gene){
+   return ( _.findIndex(this.genes, ['id', gene.id])) === -1;
   }
 
   logChromosomeGenes(){

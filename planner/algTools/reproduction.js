@@ -4,29 +4,25 @@ const MealPlanChromosome = require('./MealPlanChromosome');
 require('../logging/stackTraceInfo');
 const logger = require('../logging/logger').logger;
 const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging purposes
-
-
-
+const env = process.env;
 function populationReproduction(newPopSize, population){
 
-
-  const selectionObj = new  MealPlanSelection(population); //this is the obj of selection
+  const selectionObj = new MealPlanSelection(population); //this is the obj of selection
   const selectionType = selectionObj.selectionType;
-  const mutationRate = parseInt(process.env.MUTATION_RATE);
-  let newPopulation = [];
-  let i=0;
+  const mutationRate = parseInt(env.MUTATION_RATE);
 
-  //TODO get rid of i
-  while(i<newPopSize){
+  let newPopulation = [];
+
+  while(newPopulation.length < newPopSize){
     //selection
+
     let mom = selectionObj[selectionType]();
-    let dad = selectionObj[selectionType]();
+    let dad = selectionObj[selectionType](); //TODO: consider eliminate if identical parents
 
     //crossover
     let child = crossover(mom,dad);
     if(child.validateChromosome()) { //if crossover didn't create a valid child repeat steps
       newPopulation.push(child);
-      i++;
     }
   }
 
@@ -47,37 +43,26 @@ function populationReproduction(newPopSize, population){
 /**
  * parent1, parent2 - existing solutions to act as parents for new one
  */
-function crossover(parentA, parentB) {
+function crossover(mom, dad) {
 
-  const uniformRate = process.env.UNIFORM_RATE;
-  const childChromosomeSize = (parentA.genes.length * uniformRate) + (parentB.genes.length * uniformRate);
+  const uniformRate = parseInt(env.UNIFORM_RATE);
+  const childChromosomeSize = (mom.genes.length * uniformRate) + (dad.genes.length * (1 - uniformRate));
 
   let child = new MealPlanChromosome([], childChromosomeSize);
 
   let genesPool;
-  console.log(' -----------------------------------------------------------------');
 
-  console.log(' ----------- parentA -----------------');
-  parentA.logChromosomeGenes();
-
-  console.log(' ----------- parentB -----------------');
-  parentB.logChromosomeGenes();
-
-
-  // Loop through genes
   while (child.genes.length < child.chromosomeSize) {
-    genesPool = (child.genes.length < parentA.genes.length * uniformRate)? parentA.genes : parentB.genes;
 
-    let i =  Math.floor(Math.random() * genesPool.length);
+    genesPool = (child.genes.length < mom.genes.length * uniformRate)? mom.genes : dad.genes;
 
-    if ((_.findIndex(child.genes, ['id', genesPool[i].id])) === -1) {
-      child.genes.push(_.cloneDeep(genesPool[i]));
+    let randGene =  Math.floor(Math.random() * genesPool.length);
+
+    if (child.isValidGene(genesPool[randGene])) {
+      child.genes.push(_.cloneDeep(genesPool[randGene]));
     }
 
   }
-
-  console.log(' ----------- child -----------------');
-  child.logChromosomeGenes();
 
   return child;
 }
@@ -96,7 +81,6 @@ function mutate(chromosome) {
 }
 
 
-
 function printChromosome(who, genes) {
 
   console.log(`***** ${who} ***** `);
@@ -108,8 +92,3 @@ module.exports = {
  populationReproduction
 };
 
-
-process.on('unhandledRejection', error => {
-    // Won’t execute
-    console.log('unhandledRejection', error);
-  });
