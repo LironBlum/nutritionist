@@ -5,13 +5,13 @@ const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging 
 
 function updateUserData(req,res) {
 
-    const msg = `updateUserData`;
-    const locationMeta = `${location}, func: ${ __func},line:${ __line}`;
-    logger.info(msg, {'meta': `${locationMeta}`});
+  const msg = `updateUserData`;
+  const locationMeta = `${location}, func: ${ __func},line:${ __line}`;
+  logger.info(msg, { 'meta': `${locationMeta}` });
 
-	res.status(200).json({ updateUserData: 'updateUserData'});
-  }
+  res.status(200).json({ updateUserData: 'updateUserData' });
+}
 
-  module.exports = {
-    updateUserData
-  };
+module.exports = {
+  updateUserData
+};

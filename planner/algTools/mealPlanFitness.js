@@ -1,9 +1,9 @@
 /*This model calculates the each plan's (chromosome) grade. LOWER = BETTER */
 const weight = {
-    carbs: 0.25,
-    fats: 0.25,
-    proteins: 0.25,
-    calories: 0.25
+  carbs: 0.25,
+  fats: 0.25,
+  proteins: 0.25,
+  calories: 0.25
 };
 
 
@@ -19,7 +19,7 @@ const penalties = {
 
 const slimBonus = 0.1; //bonus factor for plan with less calories
 
-const macroMolecules = ["fats", "proteins", "carbs" ];
+const macroMolecules = ['fats', 'proteins', 'carbs' ];
 /**
  *  // = carbs*weight.carbs + fats*weight.fats + proteins*weight.proteins + calories*weight.calories;
  * @param plan - meals plan
@@ -27,50 +27,50 @@ const macroMolecules = ["fats", "proteins", "carbs" ];
  * @returns {number}
  */
 function planFitness(plan, goals) {
-    let calSum, mmSum, mmGrade, planGrade = 0;
+  let calSum, mmSum, mmGrade, planGrade = 0;
 
-    for(mm of macroMolecules ){
-        mmSum = sumPlanValByKey(plan,mm); //sum all
-        mmGrade = gradeNutrient(mmSum, goals.macroMolecules[mm], penalties[mm]);
-        planGrade += mmGrade * weight[mm];
-    }
+  for(mm of macroMolecules ){
+    mmSum = sumPlanValByKey(plan,mm); //sum all
+    mmGrade = gradeNutrient(mmSum, goals.macroMolecules[mm], penalties[mm]);
+    planGrade += mmGrade * weight[mm];
+  }
 
-    calSum = sumPlanValByKey(plan,"calories");
-    const calGrade = gradeCal(calSum, goals.maxCalories, penalties.calories) * weight.calories;
+  calSum = sumPlanValByKey(plan,'calories');
+  const calGrade = gradeCal(calSum, goals.maxCalories, penalties.calories) * weight.calories;
 
-    return planGrade + calGrade;
+  return planGrade + calGrade;
 }
 
 function gradeNutrient(curr, goal, penalty) {
 
-    let grade = Math.abs(1 - curr/goal);
+  let grade = Math.abs(1 - curr/goal);
 
-    if(curr <= goal/malnutritionFactor){
-        grade += (grade * penalty);
-    }
-    return grade;
+  if(curr <= goal/malnutritionFactor){
+    grade += (grade * penalty);
+  }
+  return grade;
 }
 
 function gradeCal(curr, goal, penalty) {
 
-    let grade = gradeNutrient(curr, goal, penalty);
+  let grade = gradeNutrient(curr, goal, penalty);
 
-    if(curr < goal){ //less calories is better
-        grade -= (grade * slimBonus)
-    }
-    return grade;
+  if(curr < goal){ //less calories is better
+    grade -= (grade * slimBonus);
+  }
+  return grade;
 }
 
 function sumPlanValByKey(plan, key) {
-    let sum = 0;
-    plan.forEach( (product) =>{
-       sum += product[key]*product["amount"]["numOfUnits"];
-    });
-    return sum;
+  let sum = 0;
+  plan.forEach( product => {
+    sum += product[key]*product['amount']['numOfUnits'];
+  });
+  return sum;
 }
 
 
 
 module.exports = {
-    planFitness: planFitness
+  planFitness
 };

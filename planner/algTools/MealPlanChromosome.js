@@ -12,7 +12,7 @@ class MealPlanChromosome{
     this.chromosomeSize = chromosomeSize;
 
     if(genesPool.length > 0){
-      this.insertNewGenes(genesPool)
+      this.insertNewGenes(genesPool);
     }
     //else create an empty chromosome
   }
@@ -26,7 +26,7 @@ class MealPlanChromosome{
 
     while(this.genes.length < this.chromosomeSize)
     {
-      let randGene = Math.floor(Math.random() * pool.length);
+      const randGene = Math.floor(Math.random() * pool.length);
 
       //avoid duplicates of genes
       if (this.isValidGene(pool[randGene])) {
@@ -52,12 +52,12 @@ class MealPlanChromosome{
    * @returns {boolean}
    */
   isValidGene(gene){
-   return ( _.findIndex(this.genes, ['id', gene.id])) === -1;
+    return ( _.findIndex(this.genes, ['id', gene.id])) === -1;
   }
 
   logChromosomeGenes(){
-    this.genes.forEach( (g) =>{
-      console.log(`${g.name},${g.amount.numOfUnits}`)
+    this.genes.forEach( g => {
+      console.log(`${g.name},${g.amount.numOfUnits}`);
     });
   }
 }

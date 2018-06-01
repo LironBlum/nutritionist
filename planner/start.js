@@ -7,7 +7,7 @@ require('dotenv').config({ path: 'variables.env' }); // import environmental var
 
 const app = express();
 
-swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
+swaggerTools.initializeMiddleware(swaggerDoc, middleware => {
   app.use(middleware.swaggerMetadata());
   app.use(middleware.swaggerValidator({
     validateResponse: false,
@@ -16,10 +16,10 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
     controllers: path.join(__dirname, 'routes/'),
   }));
   app.use(middleware.swaggerUi());
-    app.use((err, req, res, next) => {
-        res.status(500).json({ message: err });
-        next();
-    });
+  app.use((err, req, res, next) => {
+    res.status(500).json({ message: err });
+    next();
+  });
 
   const server = app.listen(process.env.PORT, () => {
     console.log(`Express running → PORT ${server.address().port}`);

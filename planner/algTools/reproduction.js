@@ -1,4 +1,4 @@
-const _= require("lodash");
+const _= require('lodash');
 const MealPlanSelection = require('./MealPlanSelection');
 const MealPlanChromosome = require('./MealPlanChromosome');
 require('../logging/stackTraceInfo');
@@ -11,16 +11,16 @@ function populationReproduction(newPopSize, population){
   const selectionType = selectionObj.selectionType;
   const mutationRate = parseInt(env.MUTATION_RATE);
 
-  let newPopulation = [];
+  const newPopulation = [];
 
   while(newPopulation.length < newPopSize){
     //selection
 
-    let mom = selectionObj[selectionType]();
-    let dad = selectionObj[selectionType](); //TODO: consider eliminate if identical parents
+    const mom = selectionObj[selectionType]();
+    const dad = selectionObj[selectionType](); //TODO: consider eliminate if identical parents
 
     //crossover
-    let child = crossover(mom,dad);
+    const child = crossover(mom,dad);
     if(child.validateChromosome()) { //if crossover didn't create a valid child repeat steps
       newPopulation.push(child);
     }
@@ -48,7 +48,7 @@ function crossover(mom, dad) {
   const uniformRate = parseInt(env.UNIFORM_RATE);
   const childChromosomeSize = (mom.genes.length * uniformRate) + (dad.genes.length * (1 - uniformRate));
 
-  let child = new MealPlanChromosome([], childChromosomeSize);
+  const child = new MealPlanChromosome([], childChromosomeSize);
 
   let genesPool;
 
@@ -56,7 +56,7 @@ function crossover(mom, dad) {
 
     genesPool = (child.genes.length < mom.genes.length * uniformRate)? mom.genes : dad.genes;
 
-    let randGene =  Math.floor(Math.random() * genesPool.length);
+    const randGene =  Math.floor(Math.random() * genesPool.length);
 
     if (child.isValidGene(genesPool[randGene])) {
       child.genes.push(_.cloneDeep(genesPool[randGene]));
@@ -89,6 +89,6 @@ function printChromosome(who, genes) {
 }
 
 module.exports = {
- populationReproduction
+  populationReproduction
 };
 

@@ -12,7 +12,7 @@ class MealPlanSelection {
 
     //call preparation function
     if (this.selectionType === 'RouletteWheel') { //TODO: not complete
-       this.pool = this.generateMatingPool(population);
+      this.pool = this.generateMatingPool(population);
 
     }else if(this.selectionType === 'Tournament'){
       this.pool = _.cloneDeep(population);
@@ -28,16 +28,16 @@ class MealPlanSelection {
    * @returns {*}
    */
   Tournament() {
-     let tournamentPop = [];
+    const tournamentPop = [];
     // const tournamentSize = parseInt(env.TOURNAMENT_SIZE);
-     const tournamentSize = env.TOURNAMENT_SIZE;
+    const tournamentSize = env.TOURNAMENT_SIZE;
 
-     while( tournamentPop.length < tournamentSize){ //create tournament population
-       let randIndex = parseInt(Math.random() * this.pool.length);
-       tournamentPop.push(this.pool[randIndex]);
-     }
+    while( tournamentPop.length < tournamentSize){ //create tournament population
+      const randIndex = parseInt(Math.random() * this.pool.length);
+      tournamentPop.push(this.pool[randIndex]);
+    }
 
-     return _.minBy(tournamentPop, 'fitness'); // select fittest (lowest = best)
+    return _.minBy(tournamentPop, 'fitness'); // select fittest (lowest = best)
   }
 
   /**
@@ -45,8 +45,8 @@ class MealPlanSelection {
    * @returns {*}
    */
   rouletteWheel(){
-     const index = parseInt(random(this.pool.length));
-     return this.pool[index];
+    const index = parseInt(random(this.pool.length));
+    return this.pool[index];
   }
 
   /**
@@ -55,9 +55,9 @@ class MealPlanSelection {
    * @param population
    */
   generateMatingPool(population){ //TODO clean
-    let pool = [];
+    const pool = [];
     for (let i = 0; i < population.length; i++) {
-      let n = int(population[i].fitness * 100);
+      const n = int(population[i].fitness * 100);
       for (let j = 0; j < n; j++) {  // Add each member n times according to its fitness score.
         pool[i] = population[i];
       }

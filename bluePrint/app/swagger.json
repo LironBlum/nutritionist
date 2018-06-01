@@ -7,7 +7,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json","text/html"],
-  "paths": {
+  "paths": {get
     "/version": {
       "x-swagger-router-controller": "monitor",
       "get": {

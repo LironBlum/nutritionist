@@ -1,9 +1,9 @@
-const _= require("lodash");
-const env = process.env
+const _= require('lodash');
+const env = process.env;
 
 function elitism(population) {
 
-  let eliteChromosomes = [];
+  const eliteChromosomes = [];
   const elitismSize = parseInt(env.ELITISM_SIZE);
   let best;
 

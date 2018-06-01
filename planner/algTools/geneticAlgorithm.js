@@ -2,20 +2,20 @@
 //chromosome = solution = meals plan for one day - constructed of 6 genes
 //population = several chromosomes  = possible solutions
 
-const _= require("lodash");
-let env = process.env;
-const populationReproduction = require("./reproduction").populationReproduction;
-const elitism = require("./mealPlanElitism").elitism;
-const MealPlanChromosome = require("./MealPlanChromosome");
+const _= require('lodash');
+const env = process.env;
+const populationReproduction = require('./reproduction').populationReproduction;
+const elitism = require('./mealPlanElitism').elitism;
+const MealPlanChromosome = require('./MealPlanChromosome');
 
 function generateInitPopulation(genes, chromosomeSize, popSize){
-    let population =[];
+  const population =[];
 
-    while(population.length < popSize){
-        population.push(new MealPlanChromosome(genes, chromosomeSize));
-    }
+  while(population.length < popSize){
+    population.push(new MealPlanChromosome(genes, chromosomeSize));
+  }
 
-    return population;
+  return population;
 }
 
 /**
@@ -26,24 +26,24 @@ function generateInitPopulation(genes, chromosomeSize, popSize){
  */
 
 function populationFitness(population, constraints, fitness) {
-    population.forEach(function (chromosome) {
-        chromosome.fitness = fitness(chromosome.genes, constraints);
-    });
+  population.forEach(chromosome => {
+    chromosome.fitness = fitness(chromosome.genes, constraints);
+  });
 }
 
 
 function evolvePopulation(population) {
-    let eliteChromosomes = [];
+  let eliteChromosomes = [];
 
-    if(env.IS_ELITISM === 'true'){
-       eliteChromosomes = elitism(population);
-    }
-    const numChrmsToGenerate = parseInt(env.POPULATION_SIZE) - eliteChromosomes.length;
-    const generatedChromosomes = populationReproduction(numChrmsToGenerate, population);
+  if(env.IS_ELITISM === 'true'){
+    eliteChromosomes = elitism(population);
+  }
+  const numChrmsToGenerate = parseInt(env.POPULATION_SIZE) - eliteChromosomes.length;
+  const generatedChromosomes = populationReproduction(numChrmsToGenerate, population);
 
-    //new population = elite chromosomes + reproduced chromosomes
+  //new population = elite chromosomes + reproduced chromosomes
 
-    return eliteChromosomes.concat(generatedChromosomes);
+  return eliteChromosomes.concat(generatedChromosomes);
 }
 
 
