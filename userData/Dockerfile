@@ -12,7 +12,7 @@ RUN npm install
 RUN chown -R node:node /var/app/node_modules
 #install npm modules in volume mount
 VOLUME /var/app/node_modules
-EXPOSE 9200
+EXPOSE 9300
 #install linux packages/commands
 RUN apk add --no-cache dumb-init
 # reduce permissions for account running app

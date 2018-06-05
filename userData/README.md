@@ -28,7 +28,7 @@ scripts/run.sh build
 scripts/run.sh up
 
 ## gu interface
-localhost:9200/docs/#/
+localhost:9300/docs/#/
 
 ### Notes
 Prerequisite Node 8.4.0

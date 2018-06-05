@@ -5,8 +5,6 @@
     "description": "API for user input",
     "version": "0.0.1"
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json","text/html"],
   "paths": {
     "/version": {
       "x-swagger-router-controller": "monitor",
@@ -70,7 +68,7 @@
          "parameters": [
           {
             "in": "body",
-            "name": "getUserDataReq",
+            "name": "updateUserData",
             "description": "request object that includes meta data, user input",
             "required": true,
             "schema": {
@@ -128,14 +126,12 @@
             "uuid":{
               "type":"string"
             }
-          },
-          "required":["service","uuid"]
+          }
         },
         "body":{
           "type":"object"
         }
-      },
-      "required": ["meta", "body"]
+      }
     }
   }
 }

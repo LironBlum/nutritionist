@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserInputService } from '../user-input.service';
 
 @Component({
   selector: 'app-meals',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MealsComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private _meals: UserInputService) { }
+ 
   ngOnInit() {
+   
   }
 
 }

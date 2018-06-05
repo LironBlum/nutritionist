@@ -10,6 +10,9 @@ import { FridgeComponent } from './fridge/fridge.component';
 import { MealsComponent } from './meals/meals.component';
 import { UserInputComponent } from './user-input/user-input.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { UserInputService } from './user-input.service';
+
 
 @NgModule({
   declarations: [
@@ -25,9 +28,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [ProductService],
+  providers: [
+    ProductService,
+    UserInputService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

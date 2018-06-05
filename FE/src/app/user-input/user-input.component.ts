@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CompileMetadataResolver } from '@angular/compiler';
+import { HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpRequest } from "@angular/common/http";
+import { UserInput } from '../models/userInput';
+import { UserInputService } from '../user-input.service';
 
 
 @Component({
@@ -16,9 +19,7 @@ export class UserInputComponent implements OnInit {
   fats:number;
   proteins:number;
   
-  
-
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private userInputService: UserInputService) { 
     this.rForm = fb.group({
       'maxCal' : [null, Validators.compose([Validators.required, Validators.min(600)])],
       'carbs' : [null, Validators.compose([Validators.required, Validators.min(20)])],
@@ -27,17 +28,23 @@ export class UserInputComponent implements OnInit {
     });
   }
 
-  addPost(post) { //handle input
-    this.maxCal = post.maxCal;
-    this.carbs = post.carbs;
-    this.fats = post.fats;
-
-    console.log(this.carbs);
-    
-    this.proteins = post.proteins;
-  }
-
   ngOnInit() {
   }
 
+  addPost(post): void {   
+
+    const input = {
+      "maxCal": post.maxCal,
+      "carbs": post.carbs,
+      "fats": post.fats,
+      "proteins": post.proteins
+    }
+    
+    this.userInputService.sendUserInput(input)
+      .subscribe(input => {
+        console.log(input)
+      });
+  }
+
 }
+

@@ -6,7 +6,6 @@
     "version": "0.0.1"
   },
   "consumes": ["application/json"],
-  "produces": ["application/json","text/html"],
   "paths": {
     "/version": {
       "x-swagger-router-controller": "monitor",

@@ -8,6 +8,7 @@ require('dotenv').config({ path: 'variables.env' }); // import environmental var
 const app = express();
 
 swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
+  
   app.use(middleware.swaggerMetadata());
   app.use(middleware.swaggerValidator({
     validateResponse: true,
@@ -17,6 +18,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
   }));
   app.use(middleware.swaggerUi());
   app.use((err, req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    
     next();
   });
   

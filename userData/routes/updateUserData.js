@@ -8,6 +8,7 @@ function updateUserData(req,res) {
     const msg = `updateUserData`;
     const locationMeta = `${location}, func: ${ __func},line:${ __line}`;
     logger.info(msg, {'meta': `${locationMeta}`});
+    console.log(req.body)    
 
 	res.status(200).json({ updateUserData: 'updateUserData'});
   }

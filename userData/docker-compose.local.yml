@@ -12,7 +12,7 @@ services:
     environment:
       - NODE_ENV=development
     ports:
-      - "9200:9200"
+      - "9300:9300"
 
 
 
