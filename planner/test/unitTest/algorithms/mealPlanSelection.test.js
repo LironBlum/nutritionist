@@ -1,16 +1,16 @@
-const expect = require("chai").expect;
-const selector = require("../../../algTools/mealPlanSelection");
+const expect = require('chai').expect;
+const selector = require('../../../algTools/reproduction');
 
-describe("mealPlanSelection ", function() {
-    describe("test ~ rouletteWheel", function() {
+describe('mealPlanSelection ', () => {
+  describe('test ~ rouletteWheel', () => {
 
-        it("return array of selected chromosomes (meal plans)", function() {
-            selector.rouletteWheel()
-            
-          expect((bestScore < tooMuchScoreWorst) &&  (bestScore < malnutritionWorst)).to.be.true;
-          expect((tooMuchScoreWorst < malnutritionWorst)).to.be.true;
-         });
+    it('return array of selected chromosomes (meal plans)', () => {
+      selector.rouletteWheel();
+
+      expect((bestScore < tooMuchScoreWorst) &&  (bestScore < malnutritionWorst)).to.be.true;
+      expect((tooMuchScoreWorst < malnutritionWorst)).to.be.true;
     });
+  });
 });
 
 

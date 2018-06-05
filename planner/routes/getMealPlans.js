@@ -1,52 +1,71 @@
 'use strict';
+const _= require('lodash');
 require('../logging/stackTraceInfo');
 const logger = require('../logging/logger').logger;
 const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging purposes
-const genAlg = require('../algTools/geneticAlgorithm');
-const planGrader = require('../algTools/mealPlanFitnessGrader');
-const plansSelection = require('../algTools/mealPlanSelection');
-let env = process.env;
+const { generateInitPopulation, populationFitness, evolvePopulation } = require('../algTools/geneticAlgorithm');
+const planGrader = require('../algTools/mealPlanFitness');
+
+const env = process.env;
 
 const chromosomeSize = parseInt(env.CHROMOSOME_SIZE);
 const popSize = parseInt(env.POPULATION_SIZE);
-const selectionSize = parseInt(env.SELECTION_SIZE);
 let constraints, products;
 
 function getMealPlans(req,res) {
 
-    const msg = `incoming getMealPlans request`;
-    const locationMeta = `${location}, func: ${ __func},line:${ __line}`;
-    logger.info(msg,{'meta': locationMeta, 'request': req.body}); //TODO insert uuid : req.body.uuid
+  const msg = `incoming getMealPlans request`;
+  const locationMeta = `${location}, func: ${ __func},line:${ __line}`;
+  logger.info(msg,{ 'meta': locationMeta, 'request': req.body }); //TODO insert uuid : req.body.uuid
 
-    constraints = req.body.body.constraints; //diatery constraints
-    products = req.body.body.products;
+  constraints = req.body.body.constraints; //diatery constraints
+  products = req.body.body.products;
 
-    const mealPlans = executeAlgorithm(constraints, products);
-
-	res.status(200).json({ getMealPlans: 'getMealPlans'});
+  const mealPlans = executeAlgorithm(constraints, products);
+  res.status(200).json({ getMealPlans: 'getMealPlans' });
 }
 
 /*-----------------------------------------------------------------------------------------------*/
 
 function executeAlgorithm(constraints, products) {
-    const firstPop = genAlg.generateInitPopulation(products, chromosomeSize, popSize);
-    
-    genAlg.populationFitness(firstPop, constraints, planGrader.planFitness);
-    genAlg.selection(firstPop, selectionSize, plansSelection.rouletteWheel)
+
+  let population = generateInitPopulation(products, chromosomeSize, popSize);
+
+  populationFitness(population, constraints, planGrader.planFitness); //TODO move fitness function call
+
+  //console.log("first population!!!!!!!!"); //TODO clean
+  //printPopulation(population); //TODO clean
+
+  let generationCntr = 1;
+  const generations = parseInt(env.NUMBER_OF_GENERATIONS);
+  while(generationCntr <= generations){ //algorithm loop
+
+    population = evolvePopulation(population, products);
+    populationFitness(population, constraints, planGrader.planFitness);
+    ++generationCntr;
+  }
+
+  //  console.log("last population!!!!!!!!!!"); //TODO clean
+  // printPopulation(population); //TODO clean
+
+  return population;
+}
+
+function printPopulation(pop) {
+  console.log(`@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
+
+  for(let i=0; i<pop.length; i++){
+    console.log(`----------------------------${i}------------------------------------`);
+
+    console.log(` ${pop[i].logChromosomeGenes()}  \n`);
+    console.log('fitness', pop[i].fitness);
+    console.log('------------------------------------------------------------------');
+  }
+
+  console.log(`@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
 }
 
 module.exports = {
-      getMealPlans
+  getMealPlans,
+  printPopulation
 };
-
-
-
-
-
-
-
-
-  process.on('unhandledRejection', error => {
-    // Won’t execute
-    console.log('unhandledRejection', error);
-  });

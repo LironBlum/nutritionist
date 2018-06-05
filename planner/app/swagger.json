@@ -175,8 +175,8 @@
       "type":"object",
       "description": "product properties ,macromolecules calories and amount",
       "properties":{
-        "productId":{
-          "type":"number"
+        "id":{
+          "type":"string"
         },
         "name":{
           "type":"string"
@@ -216,7 +216,7 @@
           "type":"number"
         }
       },
-      "required":["productId", "name", "amount", "carbs", "proteins", "fats"]
+      "required":["id", "name", "amount", "carbs", "proteins", "fats", "calories"]
     }
   }
 }
