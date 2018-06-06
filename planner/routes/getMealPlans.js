@@ -33,8 +33,8 @@ function executeAlgorithm(constraints, products) {
 
   populationFitness(population, constraints, planGrader.planFitness); //TODO move fitness function call
 
-  //console.log("first population!!!!!!!!"); //TODO clean
-  //printPopulation(population); //TODO clean
+  console.log("first population!!!!!!!!"); //TODO clean
+  printPopulation(population); //TODO clean
 
   let generationCntr = 1;
   const generations = parseInt(env.NUMBER_OF_GENERATIONS);
@@ -45,8 +45,8 @@ function executeAlgorithm(constraints, products) {
     ++generationCntr;
   }
 
-  //  console.log("last population!!!!!!!!!!"); //TODO clean
-  // printPopulation(population); //TODO clean
+    console.log("last population!!!!!!!!!!"); //TODO clean
+   printPopulation(population); //TODO clean
 
   return population;
 }
@@ -57,7 +57,7 @@ function printPopulation(pop) {
   for(let i=0; i<pop.length; i++){
     console.log(`----------------------------${i}------------------------------------`);
 
-    console.log(` ${pop[i].logChromosomeGenes()}  \n`);
+  //  console.log(` ${pop[i].logChromosomeGenes()}  \n`);
     console.log('fitness', pop[i].fitness);
     console.log('------------------------------------------------------------------');
   }

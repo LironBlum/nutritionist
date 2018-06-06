@@ -8,11 +8,11 @@ const populationReproduction = require('./reproduction').populationReproduction;
 const elitism = require('./mealPlanElitism').elitism;
 const MealPlanChromosome = require('./MealPlanChromosome');
 
-function generateInitPopulation(genes, chromosomeSize, popSize){
+function generateInitPopulation(genesPool, chromosomeSize, popSize){
   const population =[];
 
   while(population.length < popSize){
-    population.push(new MealPlanChromosome(genes, chromosomeSize));
+    population.push(new MealPlanChromosome(genesPool, chromosomeSize));
   }
 
   return population;
@@ -27,22 +27,23 @@ function generateInitPopulation(genes, chromosomeSize, popSize){
 
 function populationFitness(population, constraints, fitness) {
   population.forEach(chromosome => {
-    chromosome.fitness = fitness(chromosome.genes, constraints);
+    if(chromosome.fitness === null){
+      chromosome.fitness = fitness(chromosome.genes, constraints);
+    }
   });
 }
 
 
-function evolvePopulation(population) {
+function evolvePopulation(population, genesPool) {
   let eliteChromosomes = [];
 
   if(env.IS_ELITISM === 'true'){
     eliteChromosomes = elitism(population);
   }
   const numChrmsToGenerate = parseInt(env.POPULATION_SIZE) - eliteChromosomes.length;
-  const generatedChromosomes = populationReproduction(numChrmsToGenerate, population);
+  const generatedChromosomes = populationReproduction(numChrmsToGenerate, population, genesPool);
 
   //new population = elite chromosomes + reproduced chromosomes
-
   return eliteChromosomes.concat(generatedChromosomes);
 }
 

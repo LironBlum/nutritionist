@@ -29,7 +29,7 @@ class MealPlanChromosome{
       const randGene = Math.floor(Math.random() * pool.length);
 
       //avoid duplicates of genes
-      if (this.isValidGene(pool[randGene])) {
+      if (this.isGeneUnique(pool[randGene])) {
         this.genes.push(_.cloneDeep(pool[randGene]));
       }
     }
@@ -51,7 +51,7 @@ class MealPlanChromosome{
    * @param gene
    * @returns {boolean}
    */
-  isValidGene(gene){
+  isGeneUnique(gene){
     return ( _.findIndex(this.genes, ['id', gene.id])) === -1;
   }
 
@@ -65,3 +65,8 @@ class MealPlanChromosome{
 
 
 module.exports = MealPlanChromosome;
+
+process.on('unhandledRejection', error => {
+  // Won’t execute
+  console.log('unhandledRejection', error);
+});
