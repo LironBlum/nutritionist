@@ -32,7 +32,9 @@ export class FridgeComponent implements OnInit {
 
   itemCount: number;
   btnText: string = 'Add an item';
-  productText: string = 'first product';
+  productText: string = '';
+  quantityText: string = '';
+  unitText: string = '';
   products = [];
 
   constructor(private _product: ProductService) { }
@@ -43,7 +45,8 @@ export class FridgeComponent implements OnInit {
     this.itemCount = this.products.length;
   }
   addItem(){
-    this.products.push(this.productText);
+    var product = {name:this.productText, quantity:this.quantityText, unit:this.unitText}
+    this.products.push(product);
     this.productText = "";
     this.itemCount = this.products.length;
     this._product.changeProduct(this.products);//update product after a change
@@ -54,7 +57,6 @@ export class FridgeComponent implements OnInit {
     this._product.changeProduct(this.products); //update product after a change
     this.itemCount = this.products.length;
   }
-
 }
 
 

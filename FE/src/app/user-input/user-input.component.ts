@@ -4,6 +4,8 @@ import { CompileMetadataResolver } from '@angular/compiler';
 import { HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpRequest } from "@angular/common/http";
 import { UserInput } from '../models/userInput';
 import { UserInputService } from '../user-input.service';
+import { MealsService } from '../meals.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,8 +20,11 @@ export class UserInputComponent implements OnInit {
   carbs:number;
   fats:number;
   proteins:number;
+
+  meals: Object = {};
+
   
-  constructor(private fb: FormBuilder, private userInputService: UserInputService) { 
+  constructor(private fb: FormBuilder, private userInputService: UserInputService, private data: MealsService, private router: Router) { 
     this.rForm = fb.group({
       'maxCal' : [null, Validators.compose([Validators.required, Validators.min(600)])],
       'carbs' : [null, Validators.compose([Validators.required, Validators.min(20)])],
@@ -29,6 +34,7 @@ export class UserInputComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.data.curMeals.subscribe(meals => this.meals = meals)
   }
 
   addPost(post): void {   
@@ -39,11 +45,19 @@ export class UserInputComponent implements OnInit {
       "fats": post.fats,
       "proteins": post.proteins
     }
-    
-    this.userInputService.sendUserInput(input)
+    //redirect to frige to enter products
+    this.router.navigate(['fridge']); // home path: ''
+
+    this.userInputService.sendUserInput(input) //send to userData microservice
       .subscribe(input => {
+        this.newMeals(input);
+
         console.log(input)
       });
+  }
+
+  newMeals(results) {
+    this.data.addMeals(results);
   }
 
 }

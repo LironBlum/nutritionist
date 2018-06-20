@@ -12,6 +12,8 @@ import { UserInputComponent } from './user-input/user-input.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserInputService } from './user-input.service';
+import { MealsService } from './meals.service';
+
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { UserInputService } from './user-input.service';
   ],
   providers: [
     ProductService,
-    UserInputService
+    UserInputService,
+    MealsService
   ],
   bootstrap: [AppComponent]
 })

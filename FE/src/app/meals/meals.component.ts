@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserInputService } from '../user-input.service';
+import { MealsService } from '../meals.service';
 
 @Component({
   selector: 'app-meals',
@@ -7,11 +7,15 @@ import { UserInputService } from '../user-input.service';
   styleUrls: ['./meals.component.scss']
 })
 export class MealsComponent implements OnInit {
+  meals: Object = {};
 
-  constructor(private _meals: UserInputService) { }
+  constructor(private data: MealsService) { }
  
   ngOnInit() {
-   
+    this.data.curMeals.subscribe(meals => this.meals = meals)
+    console.log('meals component' + this.meals);
   }
+
+  
 
 }

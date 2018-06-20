@@ -23,12 +23,9 @@ export class UserInputService {
     return this.http.post<any>(this.UserInputURL, newInput, httpOptions).pipe(
       tap((newInput) => {
         this.meals$ = newInput;
-
-        //console.log(`user input = ${JSON.stringify(newInput)}`)
   }),
       catchError(error => of())
     );
   }
   constructor(private http: HttpClient) {}
-
 }
