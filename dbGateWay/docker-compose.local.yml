@@ -1,0 +1,21 @@
+version: '2'
+services:
+  dbgateway:
+    container_name: dbgateway-container
+    image: dbgateway-image
+    build:
+      context: .
+    volumes:
+      - /data/log:/log
+      - ./:/var/app
+    env_file: ./variables.env
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "9600:9600"
+
+
+
+
+
+
