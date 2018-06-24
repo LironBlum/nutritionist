@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations'
 import { ProductService } from '../product.service';
+import { UserInputComponent } from '../user-input/user-input.component'
+import { UserInputService } from '../user-input.service';
+import { MealsService } from '../meals.service';
 
 @Component({
   selector: 'app-fridge',
@@ -37,26 +40,37 @@ export class FridgeComponent implements OnInit {
   unitText: string = '';
   products = [];
 
-  constructor(private _product: ProductService) { }
+  constructor(private _product: ProductService, private userInputService: UserInputService, private mealsSrv: MealsService) { }
 
   ngOnInit() {
-    this._product.product.subscribe(res => this.products = res);
-    this._product.changeProduct(this.products);//update product after a change
-    this.itemCount = this.products.length;
+    this.itemCount = this._product.products.length;
   }
   addItem(){
     var product = {name:this.productText, quantity:this.quantityText, unit:this.unitText}
-    this.products.push(product);
+    this._product.products.push(product);
     this.productText = "";
-    this.itemCount = this.products.length;
-    this._product.changeProduct(this.products);//update product after a change
+    this.itemCount = this._product.products.length;
   }
 
   removeItem(i) {
     this.products.splice(i, 1);
-    this._product.changeProduct(this.products); //update product after a change
-    this.itemCount = this.products.length;
+    this.itemCount = this._product.products.length;
+  }
+
+
+  getMealOptions(event: Event) {
+    const userData = {
+      constrains: this._product.constraints,
+      products: this._product.products
+    }
+
+    this.userInputService.sendUserInput(userData) //send to userData microservice
+      .subscribe(res => {
+        this.mealsSrv.meals = res;
+      });
   }
 }
+
+
 
 

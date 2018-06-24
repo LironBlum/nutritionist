@@ -6,7 +6,7 @@ import { UserInput } from '../models/userInput';
 import { UserInputService } from '../user-input.service';
 import { MealsService } from '../meals.service';
 import { Router } from '@angular/router';
-
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-user-input',
@@ -20,11 +20,11 @@ export class UserInputComponent implements OnInit {
   carbs:number;
   fats:number;
   proteins:number;
-
+  products = [];
   meals: Object = {};
+  constrains: Object = {};
 
-  
-  constructor(private fb: FormBuilder, private userInputService: UserInputService, private data: MealsService, private router: Router) { 
+  constructor(private fb: FormBuilder, private data: MealsService, private router: Router, private _product: ProductService) { 
     this.rForm = fb.group({
       'maxCal' : [null, Validators.compose([Validators.required, Validators.min(600)])],
       'carbs' : [null, Validators.compose([Validators.required, Validators.min(20)])],
@@ -33,32 +33,18 @@ export class UserInputComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.data.curMeals.subscribe(meals => this.meals = meals)
-  }
+  ngOnInit() {}
 
-  addPost(post): void {   
+  addConstrains(input): void {   
 
-    const input = {
-      "maxCal": post.maxCal,
-      "carbs": post.carbs,
-      "fats": post.fats,
-      "proteins": post.proteins
+    this._product.constraints = {
+      "maxCal": input.maxCal,
+      "carbs": input.carbs,
+      "fats": input.fats,
+      "proteins": input.proteins
     }
-    //redirect to frige to enter products
-    this.router.navigate(['fridge']); // home path: ''
-
-    this.userInputService.sendUserInput(input) //send to userData microservice
-      .subscribe(input => {
-        this.newMeals(input);
-
-        console.log(input)
-      });
+    
+    this.router.navigate(['fridge']); //redirect to fridge to enter products
   }
-
-  newMeals(results) {
-    this.data.addMeals(results);
-  }
-
 }
 

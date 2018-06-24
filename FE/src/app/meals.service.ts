@@ -3,11 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class MealsService {
-    private meals = new BehaviorSubject([]);
-    curMeals = this.meals.asObservable();
+    meals: any = [];
     constructor() {}
-
-    addMeals(meals){
-        this.meals.next(meals);
-    }
 }

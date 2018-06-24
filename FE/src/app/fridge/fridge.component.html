@@ -21,7 +21,7 @@
         </form>
       </div>
       <div class="col">
-        <p class="life-container" *ngFor="let product of products; let i = index" (click)="removeItem(i)">
+        <p class="life-container" *ngFor="let product of _product.products; let i = index" (click)="removeItem(i)">
          name: {{product.name}}
          <br>
          quantity: {{product.quantity}}
@@ -30,3 +30,5 @@
         </p>
       </div>
     </div>
+
+    <button (click)="getMealOptions($event)" type=”button”>Finish</button>

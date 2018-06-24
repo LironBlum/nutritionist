@@ -36,7 +36,8 @@ import { MealsService } from './meals.service';
   providers: [
     ProductService,
     UserInputService,
-    MealsService
+    MealsService,
+    UserInputComponent
   ],
   bootstrap: [AppComponent]
 })

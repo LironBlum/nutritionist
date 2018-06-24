@@ -14,9 +14,7 @@ export class HomeComponent implements OnInit {
 
   constructor( private router: Router, private _product: ProductService) { }
 
-  ngOnInit() {
-    this._product.product.subscribe(res => this.products = res);
-  }
+  ngOnInit() {}
 
   goToUserInput(){
     this.router.navigate(["userInput"]); 

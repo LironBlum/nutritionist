@@ -16,9 +16,7 @@ export class AboutComponent implements OnInit {
     this.route.params.subscribe(res => console.log(res.id))
   }
 
-  ngOnInit() {
-    this._product.product.subscribe(res => this.products = res)
-  }
+  ngOnInit() {}
 
   sendMeHome() {
     this.router.navigate(['']); // home path: ''

@@ -11,11 +11,5 @@ export class MealsComponent implements OnInit {
 
   constructor(private data: MealsService) { }
  
-  ngOnInit() {
-    this.data.curMeals.subscribe(meals => this.meals = meals)
-    console.log('meals component' + this.meals);
-  }
-
-  
-
+  ngOnInit() {}
 }
