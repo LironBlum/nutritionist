@@ -10,7 +10,7 @@ function updateUserData(req,res) {
     logger.info(msg, {'meta': `${locationMeta}`});
     console.log(req.body)    
 
-	res.status(200).json({ updateUserData: 'meals options :) <3 :) <3 :) <3'});
+	  res.status(200).json({ updateUserData:['meals options :) <3 :) <3 :) <3','dsfghjf']});
   }
 
   module.exports = {
