@@ -33,9 +33,6 @@ function executeAlgorithm(constraints, products) {
 
   populationFitness(population, constraints, planGrader.planFitness); //TODO move fitness function call
 
-  console.log("first population!!!!!!!!"); //TODO clean
-  printPopulation(population); //TODO clean
-
   let generationCntr = 1;
   const generations = parseInt(env.NUMBER_OF_GENERATIONS);
   while(generationCntr <= generations){ //algorithm loop
@@ -44,9 +41,6 @@ function executeAlgorithm(constraints, products) {
     populationFitness(population, constraints, planGrader.planFitness);
     ++generationCntr;
   }
-
-    console.log("last population!!!!!!!!!!"); //TODO clean
-   printPopulation(population); //TODO clean
 
   return population;
 }

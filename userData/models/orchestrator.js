@@ -3,38 +3,39 @@ require('../utils/stackTraceInfo');
 const logger = require('../models/logger').logger;
 const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging purposes
 const uuid4 = require('uuid/v4')
-//const { sendRequest } = require('../../api/handlers/httpRequest')
+const { sendHttpRequest } = require('../utils/httpRequestHandler')
 const env = process.env
 
 class Orchestrator {
   constructor(constrains, products) {
-    this.plannerData= {
-      metadata: {
+    this.products = products
+    this.constrains = {
+      maxCalories: constrains.maxCal,
+      macroMolecules:
+      {
+          carbs: constrains.carbs,
+          proteins: constrains.proteins,
+          fats: constrains.fats
+      }
+    }
+    this.metadata = {
         service: 'userData',
-        uuid: uuid4(),
-      },
-      body: {
-        constraints:{
-            maxCalories: constrains.maxCal,
-            macroMolecules:{
-                carbs: constrains.carbs,
-                proteins: constrains.proteins,
-                fats: constrains.fats
-            }
-        },
-        products: []
+        uuid: uuid4()
       }
     };
-
-    console.log(this.plannerData)
-  }
+  
 
   /**
    * Execute service
    * @return {Promise<void>}
    */
   async execute() {
-    //const productsWithNuts = await this.sendToDbGw(products)
+    const reqToDbGw = {
+      metadata: this.metadata,
+      body: this.products
+    }
+    const productsWithNuts = await this.sendToDbGw(reqToDbGw)
+    console.log(productsWithNuts)
   }
 
   /**
@@ -42,11 +43,11 @@ class Orchestrator {
    * @return {Promise<void>}
    */
   async sendToDbGw(products){
-    //const url = `${env.CCO_PROTOCOL}://${env.CCO_HOST}:${env.CCO_PORT}${env.CCO_CCC_URI}`
-    //const opt = {url, data: body}
+    const url = `${env.DB_GW_PROTOCOL}://${env.DB_GW_HOST}:${env.DB_GW_PORT}${env.DB_GW_URI}`
+    const opt = {url, data: products}
   
     try {
-      //return await sendRequest('post', opt, this.uuid)
+      return await sendHttpRequest('post', opt)
     }catch (err) {
       return err
     }

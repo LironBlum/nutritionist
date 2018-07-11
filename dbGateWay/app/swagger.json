@@ -62,11 +62,22 @@
         }
       }
     },
-    "/nutritionist/v1/???": {
-      "x-swagger-router-controller": "bluePrint",
-      "get": {
-        "operationId": "???",
-         "description": "???",
+    "/nutritionist/v1/getNutritionValues": {
+      "x-swagger-router-controller": "dbGateWay",
+      "post": {
+        "operationId": "getNutritionValues",
+         "description": "get nutrition values for a given list of products",
+         "parameters": [
+          {
+            "in": "body",
+            "name": "products",
+            "description": "request object that includes meta data, products name and quantity",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/products"
+            }
+          }
+        ],
          "responses": {
             "200": {
               "description": "Success",
@@ -101,6 +112,26 @@
         "status": {
           "type": "string",
           "description": "code "
+        }
+      }
+    },
+    "products": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "description": "meta data object",
+          "properties":{
+            "service":{
+              "type":"string"
+            },
+            "uuid":{
+              "type":"string"
+            }
+          }
+        },
+        "body":{
+          "type":"object"
         }
       }
     }
