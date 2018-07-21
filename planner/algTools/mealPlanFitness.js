@@ -64,7 +64,7 @@ function gradeCal(curr, goal, penalty) {
 function sumPlanValByKey(plan, key) {
   let sum = 0;
   plan.forEach( product => {
-    sum += product[key]*product['amount']['numOfUnits'];
+    sum += product[key];
   });
   return sum;
 }

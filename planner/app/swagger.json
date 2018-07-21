@@ -181,27 +181,11 @@
         "name":{
           "type":"string"
         },
-        "amount":{
-          "type":"object",
-          "description":"type of measurements to describe the amount of the product",
-          "properties":{
-            "numOfUnits":{
-              "type":"number"
-            },
-            "grams":{
-              "type":"number"
-            },
-            "ml":{
-              "type":"number"
-            },
-            "cups":{
-              "type":"number"
-            },
-            "spoons":{
-              "type":"number"
-            }
-          },
-          "required": ["numOfUnits", "grams", "ml", "cups", "spoons"]
+        "units":{
+          "type":"string"
+        },
+        "quantity":{
+          "type":"number"
         },
         "carbs":{
           "type":"number"
@@ -216,7 +200,7 @@
           "type":"number"
         }
       },
-      "required":["id", "name", "amount", "carbs", "proteins", "fats", "calories"]
+      "required":["id", "name", "quantity", "units", "carbs", "proteins", "fats", "calories"]
     }
   }
 }

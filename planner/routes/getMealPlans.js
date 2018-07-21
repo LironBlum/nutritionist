@@ -22,7 +22,8 @@ function getMealPlans(req,res) {
   products = req.body.body.products;
 
   const mealPlans = executeAlgorithm(constraints, products);
-  res.status(200).json({ getMealPlans: 'getMealPlans' });
+
+  res.status(200).json({ mealPlans });
 }
 
 /*-----------------------------------------------------------------------------------------------*/
@@ -42,6 +43,7 @@ function executeAlgorithm(constraints, products) {
     ++generationCntr;
   }
 
+  printPopulation(population);
   return population;
 }
 
@@ -51,7 +53,7 @@ function printPopulation(pop) {
   for(let i=0; i<pop.length; i++){
     console.log(`----------------------------${i}------------------------------------`);
 
-  //  console.log(` ${pop[i].logChromosomeGenes()}  \n`);
+    //  console.log(` ${pop[i].logChromosomeGenes()}  \n`);
     console.log('fitness', pop[i].fitness);
     console.log('------------------------------------------------------------------');
   }

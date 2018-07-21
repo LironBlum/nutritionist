@@ -16,9 +16,9 @@ function populationReproduction(newPopSize, population, genesPool){
   while(newPopulation.length < newPopSize){
     //selection
     const mom = selectionObj[selectionType]();
-    let dad = selectionObj[selectionType](); 
+    let dad = selectionObj[selectionType]();
     while(_.isEqual(mom, dad)){    //  eliminate if identical parents
-      dad = selectionObj[selectionType](); 
+      dad = selectionObj[selectionType]();
     }
     //crossover
     const child = crossover(mom,dad);
@@ -27,11 +27,11 @@ function populationReproduction(newPopSize, population, genesPool){
   }
 
   //mutate population
-   newPopulation.forEach((chromosome) => {
-     if ( Math.random() <= mutationRate) {
+  newPopulation.forEach(chromosome => {
+    if ( Math.random() <= mutationRate) {
       mutate(chromosome, genesPool);
-     }
-   });
+    }
+  });
   return newPopulation;
 }
 
@@ -65,13 +65,13 @@ function crossover(mom, dad) {
 function mutate(chromosome, genesPool) {
 
   if(chromosome.chromosomeSize === genesPool.length ){
-    return chromosome; 
+    return chromosome;
   }
 
   const sizeBeforeMutation = chromosome.chromosomeSize;
 
   while(sizeBeforeMutation === chromosome.chromosomeSize){
-    let randGene =  Math.floor(Math.random() * genesPool.length);
+    const randGene =  Math.floor(Math.random() * genesPool.length);
     if (chromosome.isGeneUnique(genesPool[randGene])) {
       chromosome.genes.push(_.cloneDeep(genesPool[randGene]));
       ++chromosome.chromosomeSize ;
