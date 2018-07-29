@@ -91,8 +91,3 @@ function printChromosome(who, genes) {
 module.exports = {
   populationReproduction
 };
-
-process.on('unhandledRejection', error => {
-  // Won’t execute
-  console.log('unhandledRejection', error);
-});

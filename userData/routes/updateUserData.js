@@ -3,13 +3,13 @@ const logger = require('../models/logger').logger;
 const location = `directory: ${__dirname}, file: ${ __filename}`; //for logging purposes
 const Orchestrator = require('../models/orchestrator');
 
-function updateUserData(req,res) {
+async function updateUserData(req,res) {
 
   const msg = `incoming updateUserData request`;
   const locationMeta = `${location}, func: ${ __func},line:${ __line}`;
   logger.info(msg, { 'meta': `${locationMeta}` });
 
-  // const feData = JSON.parse(Object.keys(req.body)[0]); //input as key becouse of cors problem (find a fix that includes swagger)
+  //const feData = JSON.parse(Object.keys(req.body)[0]); //input as key becouse of cors problem (find a fix that includes swagger)
   const feData = {
     constrains: { maxCal: 1700, carbs: 60, fats: 15, proteins: 20 },
     products:
@@ -32,8 +32,12 @@ function updateUserData(req,res) {
 
 
   const inst = new Orchestrator(feData.constrains, feData.products);
-  inst.execute();
-  res.status(200).json({ updateUserData: ['meals options :) <3 :) <3 :) <3','dsfghjf'] });
+  let meals = await inst.execute();
+
+  console.log('_______________________________________________________________________________________________')
+    console.log(meals.body.mealPlans[0].genes)
+  console.log('_______________________________________________________________________________________________')
+  res.status(200).json({ mealPlans: meals.body.mealPlans });
 }
 
 module.exports = {

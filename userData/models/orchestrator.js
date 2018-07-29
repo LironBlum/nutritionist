@@ -36,24 +36,12 @@ class Orchestrator {
       body: { products: _.map(this.productsFromClient, 'name') }
     };
 
-
     const dbGwResponse = await Orchestrator.sendToDbGw(reqToDbGw);
-
     const productsFromDB =  dbGwResponse.body.results;
-
-
-    console.log(' ------------------- productsWithNuts ---------------------------', dbGwResponse.body.results);
-
     const reqToPlanner = this.buildPlannerRequest(productsFromDB);
-
-
-    console.log('-------------------  reqToPlanner --------------', reqToPlanner);
-
     const plannerResponse =  await Orchestrator.sendToPlanner(reqToPlanner);
 
-
-    console.log('-------------------  plannerResponse --------------', plannerResponse.body);
-
+    return plannerResponse
   }
 
   /**
@@ -62,7 +50,6 @@ class Orchestrator {
    */
   static async sendToDbGw(products){
     const url = `${env.DB_GW_PROTOCOL}://${env.DB_GW_HOST}:${env.DB_GW_PORT}${env.DB_GW_URI}`;
-
     const opt = { url, data: products };
 
     try {
@@ -75,7 +62,6 @@ class Orchestrator {
 
   static async sendToPlanner(data){
     const url = `${env.PLANNER_PROTOCOL}://${env.PLANNER_HOST}:${env.PLANNER_PORT}${env.PLANNER_URI}`;
-
     const opt = { url, data };
 
     try {
@@ -124,9 +110,5 @@ class Orchestrator {
     });
     return results;
   }
-
-
-
-
 }
 module.exports = Orchestrator;

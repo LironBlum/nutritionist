@@ -48,17 +48,17 @@ function executeAlgorithm(constraints, products) {
 }
 
 function printPopulation(pop) {
-  console.log(`@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
+  console.log(`_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ `);
 
-  for(let i=0; i<pop.length; i++){
+  for(let i = 0; i < pop.length; ++i){
     console.log(`----------------------------${i}------------------------------------`);
 
     //  console.log(` ${pop[i].logChromosomeGenes()}  \n`);
-    console.log('fitness', pop[i].fitness);
+    console.log('fitness', pop[i]);
     console.log('------------------------------------------------------------------');
   }
 
-  console.log(`@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`);
+  console.log(`_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ `);
 }
 
 module.exports = {

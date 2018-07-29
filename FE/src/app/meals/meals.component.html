@@ -1,3 +1,23 @@
-<p *ngFor="let meal of data.meals.updateUserData">
-  {{meal}}
-</p>
+
+
+<div class="col-md-3" *ngFor="let meal of data.meals.mealPlans">
+    Score: {{meal.fitness}}
+    <br>
+    Products
+    <br>
+    <div *ngFor="let gene of meal.genes">
+        Product name:{{gene.name}} 
+        Quantitiy:{{gene.quantity}} {{gene.units}}
+        <br>
+        Proteins : {{gene.proteins}}
+        <br>
+        Fats: {{gene.fats}}
+        <br>
+        Carbs: {{gene.carbs}}
+        <br>
+        Calories: {{gene.calories}}
+        <br> <br>
+    </div>
+  </div>
+
+    
