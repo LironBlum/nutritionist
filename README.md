@@ -11,8 +11,7 @@ Project Architecture:
 --------------------------------------------------------------------------------------
 
 # Background
-As presented at the Revesim Summit 2018 presentation
---------------------------------------------------------
+
 When was the last time you wrote an algorithm to plan your diet?
 
 Genetic Algorithm is known for being able to solve Constraint Satifaction Problems.
